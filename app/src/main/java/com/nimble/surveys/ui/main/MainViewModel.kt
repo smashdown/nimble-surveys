@@ -13,4 +13,12 @@ class MainViewModel(
     fun loadSurveys() {
 
     }
+
+    fun onRefresh() {
+
+    }
+
+    fun onClickMenu() {
+
+    }
 }

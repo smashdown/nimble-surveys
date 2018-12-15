@@ -21,7 +21,7 @@
             layout="@layout/app_bar" />
 
         <fragment
-            android:id="@+id/articleListFragment"
+            android:id="@+id/mainFragment"
             android:name="com.nimble.surveys.ui.main.MainFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

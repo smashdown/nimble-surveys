@@ -4,8 +4,9 @@
     tools:context="com.nimble.surveys.ui.main.MainActivity">
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_menu"
+        android:icon="@drawable/ic_menu_white_24dp"
         android:orderInCategory="100"
-        android:title="@string/settings"
-        app:showAsAction="never" />
+        android:title="@string/menu"
+        app:showAsAction="always" />
 </menu>
