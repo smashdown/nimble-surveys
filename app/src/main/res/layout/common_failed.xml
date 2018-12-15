@@ -10,11 +10,11 @@
             type="java.lang.Boolean" />
 
         <variable
-            name="emptyTitle"
+            name="failedTitle"
             type="java.lang.String" />
 
         <variable
-            name="emptyDesc"
+            name="failedDesc"
             type="java.lang.String" />
 
         <import type="android.view.View" />
@@ -32,13 +32,13 @@
             android:id="@+id/emptyTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{emptyTitle}"
+            android:text="@{failedTitle}"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/no_survey_title" />
+            tools:text="@string/cannot_connect" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -59,11 +59,11 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:gravity="center"
-            android:text="@{emptyDesc}"
+            android:text="@{failedTitle}"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/emptyTitle"
-            tools:text="@string/no_survey_desc" />
+            tools:text="@string/tab_to_retry" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
