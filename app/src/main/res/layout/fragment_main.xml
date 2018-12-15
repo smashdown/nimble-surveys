@@ -27,7 +27,7 @@
             app:refreshing="@{ vm.status == Status.LOADING }">
 
             <!--app:layoutManager="@{vm.layoutManager}"-->
-            <androidx.recyclerview.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerViewdata
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
@@ -37,46 +37,18 @@
         <include
             android:id="@+id/empty"
             layout="@layout/common_empty"
+            app:emptyDesc="@{@string/no_survey_desc}"
+            app:emptyTitle="@{@string/no_survey_title}"
             app:visible="@{vm.status == Status.EMPTY}"
             tools:visibility="gone" />
 
-        <!-- Failed View -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="@{ vm.status == Status.FAILED ? View.VISIBLE : View.GONE }"
-            tools:visibility="gone">
+        <include
+            android:id="@+id/failed"
+            layout="@layout/common_failed"
+            app:failedDesc="@{@string/tab_to_retry}"
+            app:failedTitle="@{@string/cannot_connect}"
+            app:visible="@{vm.status == Status.FAILED}"
+            tools:visibility="gone" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="64dip"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:tint="@color/colorAccent"
-                    app:srcCompat="@drawable/ic_cloud_off_white_24dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dip"
-                    android:text="@string/cannot_connect"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dip"
-                    android:text="@string/tab_to_retry"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
-            </LinearLayout>
-
-        </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
