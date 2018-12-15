@@ -14,15 +14,8 @@ abstract class BaseViewModel : ViewModel() {
     val disposables = CompositeDisposable()
 
     // Common UI Events
-    val apiErrorEvent: SingleLiveEvent<Throwable> = SingleLiveEvent()
-    val finishEvent: SingleLiveEvent<Intent> = SingleLiveEvent() // succeed
-    //    val permissionRequestEvent: SingleLiveEvent<PermissionRequestParam> = SingleLiveEvent()
+    val finishEvent: SingleLiveEvent<Intent> = SingleLiveEvent()
     val toastLiveEvent: SingleLiveEvent<Int> = SingleLiveEvent()
-    val snackBarLiveEvent: SingleLiveEvent<String> = SingleLiveEvent()
-    val progressDialogLiveEvent: SingleLiveEvent<String> = SingleLiveEvent()
-    //    val confirmDialogLiveEvent: SingleLiveEvent<ConfirmDialogParam> = SingleLiveEvent()
-    //    val simpleInputDialogEvent: SingleLiveEvent<SimpleInputDialogParam> = SingleLiveEvent()
-    //    val stringListDialogLiveEvent: SingleLiveEvent<StringListDialogParam> = SingleLiveEvent()
 
     fun launch(job: () -> Disposable) {
         disposables.add(job())
