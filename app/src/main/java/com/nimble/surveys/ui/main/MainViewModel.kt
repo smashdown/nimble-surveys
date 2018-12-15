@@ -25,6 +25,7 @@ class MainViewModel(
     val status: SingleLiveEvent<Status> = SingleLiveEvent(Status.EMPTY)
     val adapter: SurveyListAdapter = SurveyListAdapter(this, items)
     val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(fragment.context)
+    val indicatorCountChanged: SingleLiveEvent<Int> = SingleLiveEvent(0)
 
     fun loadSurveys() {
         disposables.add(
@@ -38,6 +39,7 @@ class MainViewModel(
 
                             items.clear()
                             items.addAll(surveys)
+                            indicatorCountChanged.value = surveys.size
                             adapter.notifyDataSetChanged()
 
                             items.forEach { item -> Timber.d("items url=%s", item.coverImageUrl) }
@@ -67,7 +69,7 @@ class MainViewModel(
     }
 
     fun onClickMenu() {
-        // DO nothing for now
+        // DO NOTHING FOR NOW
     }
 
     private fun onSurveyFetched(surveyList: List<Survey>) {
@@ -91,7 +93,7 @@ class MainViewModel(
     }
 
     fun onClickSurvey(item: Survey) {
-
+        Timber.d("onClickSurvey() - surveyId=%s", item.id)
     }
 
     fun onImageLoadFailed(survey: Survey) {
