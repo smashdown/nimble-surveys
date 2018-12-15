@@ -1,9 +1,7 @@
 package com.nimble.surveys.base
 
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.MenuItem
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
@@ -37,11 +35,24 @@ abstract class BaseActivity<B : ViewDataBinding, out VM : BaseViewModel>(clazz: 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // to support default transition animation for activity
         when (getTransitionAnimationDirection()) {
-            HSTransitionDirection.FROM_RIGHT_TO_LEFT -> overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left)
-            HSTransitionDirection.FROM_LEFT_TO_RIGHT -> overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right)
-            HSTransitionDirection.FROM_TOP_TO_BOTTOM -> overridePendingTransition(R.anim.pull_in_top, R.anim.push_out_bottom)
+            HSTransitionDirection.FROM_RIGHT_TO_LEFT -> overridePendingTransition(
+                R.anim.pull_in_right,
+                R.anim.push_out_left
+            )
+            HSTransitionDirection.FROM_LEFT_TO_RIGHT -> overridePendingTransition(
+                R.anim.pull_in_left,
+                R.anim.push_out_right
+            )
+            HSTransitionDirection.FROM_TOP_TO_BOTTOM -> overridePendingTransition(
+                R.anim.pull_in_top,
+                R.anim.push_out_bottom
+            )
             HSTransitionDirection.FROM_BOTTOM_TO_TOP -> overridePendingTransition(R.anim.pull_in_bottom, R.anim.stay)
+            else -> {
+                // DO NOTHING FOR NONE
+            }
         }
 
         binding = DataBindingUtil.setContentView(this, getLayoutRes())
@@ -53,70 +64,17 @@ abstract class BaseActivity<B : ViewDataBinding, out VM : BaseViewModel>(clazz: 
     }
 
     open fun observeViewModel() {
-//        viewModel.apiErrorEvent
-//                .observe(this, Observer{ throwable ->
-//                    if (throwable is HttpException) {
-//                        try {
-//                            val apiError = errorConverter.convert((throwable as HttpException).response().errorBody())
-//                            AppUtil.handleServerError(this, apiError, false)
-//                        } catch (e: IOException) {
-//                            Timber.e(e, e.getLocalizedMessage())
-//                            UiUtil.toast(this, R.string.hs_something_went_wrong)
-//                        }
-//
-//                    } else {
-//                        Timber.d(throwable, throwable.getLocalizedMessage())
-//                        AppUtil.handleNetworkFailException(this, false)
-//                    }
-//                })
-//
-//        viewModel.permissionRequestEvent
-//                .observe(this, { permissionRequestParam ->
-//                    Dexter.withActivity(this)
-//                            .withPermissions(permissionRequestParam.permissions)
-//                            .withListener(permissionRequestParam.multiplePermissionsListener)
-//                            .check()
-//                })
-
         viewModel.toastLiveEvent
-                .observe(this, Observer { stringResId -> toast(stringResId) })
-
-//        viewModel.snackBarLiveEvent
-//                .observe(this, object : Observer<String>() {
-//                    fun onChanged(@Nullable s: String) {
-//                        // FIXME:
-//                    }
-//                })
-
-//        viewModel.progressDialogLiveEvent
-//                .observe(this, Observer { msg ->
-//                    if (TextUtils.isEmpty(msg))
-//                        progressDialog?.dismiss()
-//                    else
-//                        progressDialog = progressDialog(message = msg)
-//                    if (TextUtils.isEmpty(msg)) {
-//                        UiUtil.hideProgressDialog(progressDialog)
-//                    } else {
-//                        progressDialog = UiUtil.showProgressDialog(this, progressDialog, msg)
-//                    }
-//                })
-//
-//        viewModel.confirmDialogLiveEvent
-//                .observe(this, { confirmDialogParam -> UiUtil.showConfirmDialog(this, confirmDialogParam) })
-//
-//        viewModel.simpleInputDialogEvent
-//                .observe(this, { simpleInputDialogParam -> UiUtil.showInputTextDialog(this, simpleInputDialogParam) })
-//
-//        viewModel.stringListDialogLiveEvent
-//                .observe(this, { stringListDialogParam -> UiUtil.showStringListDialog(this, stringListDialogParam) })
+            .observe(this, Observer { stringResId -> toast(stringResId) })
 
         viewModel.finishEvent
-                .observe(this, Observer { intent ->
-                    if (intent != null) setResult(Activity.RESULT_OK, intent) else setResult(Activity.RESULT_CANCELED, intent)
-                    finish()
-                })
-
-        TextUtils.isEmpty("a")
+            .observe(this, Observer { intent ->
+                if (intent != null) setResult(Activity.RESULT_OK, intent) else setResult(
+                    Activity.RESULT_CANCELED,
+                    intent
+                )
+                finish()
+            })
     }
 
     // Up button default behavior
@@ -131,11 +89,24 @@ abstract class BaseActivity<B : ViewDataBinding, out VM : BaseViewModel>(clazz: 
     override fun finish() {
         super.finish()
 
+        // to support default transition animation for activity
         when (getTransitionAnimationDirection()) {
-            HSTransitionDirection.FROM_RIGHT_TO_LEFT -> overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right)
-            HSTransitionDirection.FROM_LEFT_TO_RIGHT -> overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left)
-            HSTransitionDirection.FROM_TOP_TO_BOTTOM -> overridePendingTransition(R.anim.pull_in_bottom, R.anim.push_out_top)
+            HSTransitionDirection.FROM_RIGHT_TO_LEFT -> overridePendingTransition(
+                R.anim.pull_in_left,
+                R.anim.push_out_right
+            )
+            HSTransitionDirection.FROM_LEFT_TO_RIGHT -> overridePendingTransition(
+                R.anim.pull_in_right,
+                R.anim.push_out_left
+            )
+            HSTransitionDirection.FROM_TOP_TO_BOTTOM -> overridePendingTransition(
+                R.anim.pull_in_bottom,
+                R.anim.push_out_top
+            )
             HSTransitionDirection.FROM_BOTTOM_TO_TOP -> overridePendingTransition(R.anim.stay, R.anim.push_out_bottom)
+            else -> {
+                // DO NOTHING for NONE
+            }
         }
     }
 }

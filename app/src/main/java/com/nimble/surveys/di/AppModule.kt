@@ -16,17 +16,17 @@ import java.util.*
 val mvvmModules = module {
 
     viewModel { (activity: Activity) -> DummyViewModel() }
-    viewModel { (fragment: Fragment) -> MainViewModel(fragment) }
+    viewModel { (fragment: Fragment) -> MainViewModel(fragment, get()) }
 
     single { createMoshi() }
 }
 
 fun createMoshi(): Moshi {
     return Moshi
-            .Builder()
-            .add(KotlinJsonAdapterFactory())
-            .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
-            .build()
+        .Builder()
+        .add(KotlinJsonAdapterFactory())
+        .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+        .build()
 }
 
 val rxModule = module {

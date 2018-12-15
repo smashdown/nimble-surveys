@@ -1,5 +1,6 @@
 package com.nimble.surveys.base
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,15 +10,16 @@ import androidx.annotation.Nullable
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.nimble.surveys.BR
+import org.jetbrains.anko.toast
 import org.koin.androidx.viewmodel.ext.android.viewModelByClass
 import org.koin.core.parameter.parametersOf
-import timber.log.Timber
 import kotlin.reflect.KClass
 
 abstract class BaseFragment<DB : ViewDataBinding, out VM : BaseViewModel>(clazz: KClass<VM>) : Fragment() {
-    public val viewModel: VM by viewModelByClass(clazz) { parametersOf(this) }
-    protected lateinit var binding: DB
+    val viewModel: VM by viewModelByClass(clazz) { parametersOf(this) }
+    lateinit var binding: DB
 
     abstract fun getLayoutRes(): Int
 
@@ -26,8 +28,6 @@ abstract class BaseFragment<DB : ViewDataBinding, out VM : BaseViewModel>(clazz:
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        Timber.d("onCreateView()")
-
         binding = DataBindingUtil.inflate(inflater, getLayoutRes(), container, false)
         binding.setLifecycleOwner(this)
         binding.setVariable(BR.vm, viewModel)
@@ -39,8 +39,6 @@ abstract class BaseFragment<DB : ViewDataBinding, out VM : BaseViewModel>(clazz:
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Timber.d("onViewCreated()")
-
         // initViews in fragment layer
         initViews(savedInstanceState ?: arguments)
 
@@ -52,63 +50,18 @@ abstract class BaseFragment<DB : ViewDataBinding, out VM : BaseViewModel>(clazz:
     }
 
     open fun observeViewModel() {
-        // TODO
-//        viewModel.apiErrorEvent
-//                .observe(this, { throwable ->
-//                    if (throwable is HttpException) {
-//                        try {
-//                            val apiError = errorConverter.convert((throwable as HttpException).response().errorBody())
-//                            AppUtil.handleServerError(activity, apiError, false)
-//                        } catch (e: IOException) {
-//                            Timber.e(e, e.getLocalizedMessage())
-//                            UiUtil.toast(activity, R.string.hs_something_went_wrong)
-//                        }
-//
-//                    } else {
-//                        AppUtil.handleNetworkFailException(activity, false)
-//                    }
-//                })
-//
-//        viewModel.permissionRequestEvent
-//                .observe(this, { permissionRequestParam -> Dexter.withActivity(activity).withPermissions(permissionRequestParam.permissions).withListener(permissionRequestParam.multiplePermissionsListener).check() })
-//
-//        viewModel.toastLiveEvent
-//                .observe(this, { s -> UiUtil.toast(activity, s) })
-//
-//        viewModel.snackBarLiveEvent
-//                .observe(this, object : Observer<String>() {
-//                    fun onChanged(s: String?) {
-//                        // FIXME:
-//                    }
-//                })
-//
-//        viewModel.progressDialogLiveEvent
-//                .observe(this, { msg ->
-//                    if (TextUtils.isEmpty(msg)) {
-//                        UiUtil.hideProgressDialog(progressDialog)
-//                    } else {
-//                        progressDialog = UiUtil.showProgressDialog(activity, progressDialog, msg)
-//                    }
-//                })
-//
-//        viewModel.confirmDialogLiveEvent
-//                .observe(this, { confirmDialogParam -> UiUtil.showConfirmDialog(activity, confirmDialogParam) })
-//
-//        viewModel.simpleInputDialogEvent
-//                .observe(this, { simpleInputDialogParam -> UiUtil.showInputTextDialog(activity, simpleInputDialogParam) })
-//
-//        viewModel.stringListDialogLiveEvent
-//                .observe(this, { stringListDialogParam -> UiUtil.showStringListDialog(activity, stringListDialogParam) })
-//
-//        viewModel.finishEvent
-//                .observe(this, { intent ->
-//                    if (intent != null) {
-//                        activity!!.setResult(Activity.RESULT_OK, intent)
-//                    } else {
-//                        activity!!.setResult(Activity.RESULT_CANCELED, intent)
-//                    }
-//                    activity!!.finish()
-//                })
+        viewModel.toastLiveEvent
+            .observe(this, Observer { s -> activity?.toast(s) })
+
+        viewModel.finishEvent
+            .observe(this, Observer { intent ->
+                if (intent != null) {
+                    activity!!.setResult(Activity.RESULT_OK, intent)
+                } else {
+                    activity!!.setResult(Activity.RESULT_CANCELED, intent)
+                }
+                activity!!.finish()
+            })
     }
 
     @CallSuper

@@ -14,7 +14,15 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField 'String', 'OAUTH_GRANT_TYPE', 'password'
+            buildConfigField 'String', 'OAUTH_USERNAME', 'carlos@nimbl3.com'
+            buildConfigField 'String', 'OAUTH_PASSWORD', 'antikera'
+        }
         release {
+            buildConfigField 'String', 'OAUTH_GRANT_TYPE', 'password'
+            buildConfigField 'String', 'OAUTH_USERNAME', 'carlos@nimbl3.com'
+            buildConfigField 'String', 'OAUTH_PASSWORD', 'antikera'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
