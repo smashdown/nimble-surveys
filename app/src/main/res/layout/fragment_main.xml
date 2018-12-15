@@ -24,19 +24,23 @@
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="@{vm.status == Status.LOADED ? View.VISIBLE : View.GONE }"
+            app:onRefreshListener="@{() -> vm.onRefresh()}"
             app:refreshing="@{ vm.status == Status.LOADING }">
 
             <!--app:layoutManager="@{vm.layoutManager}"-->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                app:adapter="@{vm.adapter}"
+                app:layoutManager="@{vm.layoutManager}" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <include
             android:id="@+id/empty"
-            layout="@layout/common_empty"
+            layout="@layout/view_empty"
             app:emptyDesc="@{@string/no_survey_desc}"
             app:emptyTitle="@{@string/no_survey_title}"
             app:visible="@{vm.status == Status.EMPTY}"
@@ -44,7 +48,7 @@
 
         <include
             android:id="@+id/failed"
-            layout="@layout/common_failed"
+            layout="@layout/view_failed"
             app:failedDesc="@{@string/tab_to_retry}"
             app:failedTitle="@{@string/cannot_connect}"
             app:visible="@{vm.status == Status.FAILED}"

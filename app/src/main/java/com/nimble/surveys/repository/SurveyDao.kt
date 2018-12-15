@@ -17,10 +17,10 @@ interface SurveyDao {
     fun findById(id: String): Single<Survey>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveAll(articles: List<Survey>)
+    fun saveAll(surveyList: List<Survey>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun save(vararg article: Survey)
+    fun save(vararg survey: Survey)
 
     @Query("DELETE FROM surveys")
     fun deleteAll()

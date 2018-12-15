@@ -15,7 +15,7 @@ abstract class BaseViewModel : ViewModel() {
 
     // Common UI Events
     val finishEvent: SingleLiveEvent<Intent> = SingleLiveEvent()
-    val toastLiveEvent: SingleLiveEvent<Int> = SingleLiveEvent()
+    val toastLiveEvent: SingleLiveEvent<String> = SingleLiveEvent()
 
     fun launch(job: () -> Disposable) {
         disposables.add(job())

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.nimble.surveys.ui.main.MainViewModel" />
+
+        <variable
+            name="item"
+            type="com.nimble.surveys.model.Survey" />
+
+        <import type="android.view.View" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> vm.onClickSurvey(item)}">
+
+        <ImageView
+            android:id="@+id/ivBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@color/colorPrimary"
+            android:minHeight="200dip"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:survey="@{item}"
+            app:viewModel="@{vm}" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:text="@{item.title}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:theme="@style/outlineText"
+            android:visibility="@{item.coverImageAvailable ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/tvDescription"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Title" />
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:text="@{item.description}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:textColor="@android:color/white"
+            android:theme="@style/outlineText"
+            android:visibility="@{item.coverImageAvailable ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@+id/btnTakeTheSurvey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            tools:text="Description" />
+
+        <Button
+            android:id="@+id/btnTakeTheSurvey"
+            android:layout_width="0dp"
+            android:layout_height="36dip"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dip"
+            android:background="@drawable/bg_rounded_button_accent"
+            android:text="@string/take_the_survey"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:visibility="@{item.coverImageAvailable ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/ivBackground"
+            app:layout_constraintEnd_toEndOf="@+id/ivBackground"
+            app:layout_constraintStart_toStartOf="@+id/ivBackground"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".4" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

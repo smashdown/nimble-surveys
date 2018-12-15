@@ -59,7 +59,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:gravity="center"
-            android:text="@{failedTitle}"
+            android:text="@{failedDesc}"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
