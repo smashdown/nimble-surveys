@@ -1,17 +1,18 @@
 package com.nimble.surveys.api
 
 import com.nimble.surveys.BuildConfig
-import com.nimble.surveys.base.BaseReponse
 import com.nimble.surveys.model.AccessToken
+import com.nimble.surveys.model.Survey
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 @JvmSuppressWildcards
 interface SurveysApi {
-    
-    @GET("oauth/token")
+
+    @POST("oauth/token")
     @Headers("Content-type: application/json")
     fun auth(
         @Query("grant_type") grantType: String = BuildConfig.OAUTH_GRANT_TYPE,
@@ -21,6 +22,6 @@ interface SurveysApi {
 
     @GET("surveys.json")
     @Headers("Content-type: application/json")
-    fun articles(@Query("access_token") accessToken: String): Observable<BaseReponse<String>>
+    fun articles(@Query("access_token") accessToken: String): Observable<List<Survey>>
 
 }

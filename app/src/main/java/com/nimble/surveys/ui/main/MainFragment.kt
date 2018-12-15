@@ -13,9 +13,12 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(MainViewMo
     override fun getLayoutRes(): Int = R.layout.fragment_main
 
     override fun initViews(bundle: Bundle?) {
+        viewModel.loadSurveys()
+        viewModel.onRefresh()
     }
 
     override fun observeViewModel() {
         super.observeViewModel()
     }
+
 }
