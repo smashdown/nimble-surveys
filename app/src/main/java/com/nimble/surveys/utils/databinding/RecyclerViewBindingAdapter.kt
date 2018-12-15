@@ -3,7 +3,6 @@ package com.nimble.surveys.utils.databinding
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import java.lang.Exception
 
 object RecyclerViewBindingAdapter {
     @JvmStatic

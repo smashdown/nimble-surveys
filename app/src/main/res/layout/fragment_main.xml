@@ -24,7 +24,7 @@
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{vm.status == Status.LOADED ? View.VISIBLE : View.GONE }"
+            android:visibility="@{(vm.status == Status.LOADED || vm.status == Status.LOADING) ? View.VISIBLE : View.GONE }"
             app:onRefreshListener="@{() -> vm.onRefresh()}"
             app:refreshing="@{ vm.status == Status.LOADING }">
 
@@ -37,6 +37,20 @@
                 app:layoutManager="@{vm.layoutManager}" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <com.nimble.surveys.utils.views.ViewIndicator
+            android:id="@+id/viewIndicator"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
+            app:avi_drawable="@drawable/drawable_blue_circle"
+            app:avi_drawable_unselected="@drawable/drawable_gray_circle"
+            app:avi_height="12dp"
+            app:avi_margin="12dp"
+            app:avi_orientation="vertical"
+            app:avi_width="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/swipeRefreshLayout"
+            app:layout_constraintRight_toRightOf="@id/swipeRefreshLayout"
+            app:layout_constraintTop_toTopOf="@+id/swipeRefreshLayout" />
 
         <include
             android:id="@+id/empty"
