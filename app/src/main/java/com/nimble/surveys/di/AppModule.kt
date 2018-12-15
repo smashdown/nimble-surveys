@@ -16,7 +16,7 @@ import java.util.*
 val mvvmModules = module {
 
     viewModel { (activity: Activity) -> DummyViewModel() }
-    viewModel { (fragment: Fragment) -> MainViewModel(fragment, get()) }
+    viewModel { (fragment: Fragment) -> MainViewModel(fragment, get(), get()) }
 
     single { createMoshi() }
 }
