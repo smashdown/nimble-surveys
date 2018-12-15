@@ -2,4 +2,10 @@
     <string name="app_name">Surveys</string>
     <string name="take_the_survey">Take the survey</string>
     <string name="settings">Settings</string>
+
+    <string name="no_survey_title">No Survey</string>
+    <string name="no_survey_desc">There is no survey now, please re-try it later.</string>
+
+    <string name="cannot_connect">Can\'t Connect</string>
+    <string name="tab_to_retry">Tap to retry</string>
 </resources>
