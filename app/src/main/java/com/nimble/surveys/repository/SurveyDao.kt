@@ -10,7 +10,7 @@ import io.reactivex.Single
 
 @Dao
 interface SurveyDao {
-    @Query("SELECT * FROM surveys")
+    @Query("SELECT * FROM surveys ORDER BY created_at ASC")
     fun findAll(): Flowable<List<Survey>>
 
     @Query("SELECT * FROM surveys WHERE id = :id")
@@ -26,5 +26,5 @@ interface SurveyDao {
     fun deleteAll()
 
     @Query("SELECT COUNT(*) FROM surveys")
-    fun count(): Integer
+    fun count(): Int
 }

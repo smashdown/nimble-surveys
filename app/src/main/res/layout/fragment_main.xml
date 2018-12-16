@@ -15,42 +15,50 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:orientation="vertical">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefreshLayout"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{(vm.status == Status.LOADED || vm.status == Status.LOADING) ? View.VISIBLE : View.GONE }"
-            app:onRefreshListener="@{() -> vm.onRefresh()}"
-            app:refreshing="@{ vm.status == Status.LOADING }">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <!--app:layoutManager="@{vm.layoutManager}"-->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefreshLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:adapter="@{vm.adapter}"
-                app:layoutManager="@{vm.layoutManager}" />
+                android:visibility="@{(vm.status == Status.LOADED || vm.status == Status.LOADING) ? View.VISIBLE : View.GONE }"
+                app:onRefreshListener="@{() -> vm.onRefresh()}"
+                app:refreshing="@{ vm.status == Status.LOADING }">
 
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                <!--app:layoutManager="@{vm.layoutManager}"-->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:adapter="@{vm.adapter}"
+                    app:layoutManager="@{vm.layoutManager}"
+                    app:onScrollLoadMoreListener="@{vm.onScrollLoadMoreListener}" />
 
-        <com.nimble.surveys.utils.views.ViewIndicator
-            android:id="@+id/viewIndicator"
-            android:layout_width="40dp"
-            android:layout_height="0dp"
-            app:avi_drawable="@drawable/drawable_blue_circle"
-            app:avi_drawable_unselected="@drawable/drawable_gray_circle"
-            app:avi_height="12dp"
-            app:avi_margin="12dp"
-            app:avi_orientation="vertical"
-            app:avi_width="12dp"
-            app:layout_constraintBottom_toBottomOf="@+id/swipeRefreshLayout"
-            app:layout_constraintRight_toRightOf="@id/swipeRefreshLayout"
-            app:layout_constraintTop_toTopOf="@+id/swipeRefreshLayout" />
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <com.nimble.surveys.utils.views.ViewIndicator
+                android:id="@+id/viewIndicator"
+                android:layout_width="40dp"
+                android:layout_height="0dp"
+                app:avi_drawable="@drawable/drawable_blue_circle"
+                app:avi_drawable_unselected="@drawable/drawable_gray_circle"
+                app:avi_height="8dp"
+                app:avi_margin="8dp"
+                app:avi_orientation="vertical"
+                app:avi_width="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/swipeRefreshLayout"
+                app:layout_constraintRight_toRightOf="@id/swipeRefreshLayout"
+                app:layout_constraintTop_toTopOf="@+id/swipeRefreshLayout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
             android:id="@+id/empty"
@@ -68,5 +76,5 @@
             app:visible="@{vm.status == Status.FAILED}"
             tools:visibility="gone" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>
