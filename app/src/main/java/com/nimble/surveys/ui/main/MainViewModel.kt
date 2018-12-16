@@ -1,5 +1,9 @@
 package com.nimble.surveys.ui.main
 
+import android.content.Intent
+import android.widget.ImageView
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,8 +21,8 @@ import com.nimble.surveys.utils.views.OnScrollLoadMoreListener
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import org.jetbrains.anko.startActivity
 import timber.log.Timber
+
 
 class MainViewModel(
         private val fragment: Fragment,
@@ -34,8 +38,11 @@ class MainViewModel(
         get() = LinearLayoutManager(fragment.context)
     val indicatorCountChanged: SingleLiveEvent<Int> = SingleLiveEvent(0)
 
-    var page = 0
     var canLoadMore = true
+
+    init {
+        this.adapter.setHasStableIds(true)
+    }
 
     fun loadSurveys() {
         disposables.add(
@@ -49,9 +56,7 @@ class MainViewModel(
                             items.addAll(surveys)
                             adapter.notifyDataSetChanged()
 
-                            indicatorCountChanged.value = surveys.size
-
-                            items.forEach { item -> Timber.d("items url=%s", item.coverImageUrl) }
+                            indicatorCountChanged.value = items.size
                         }
         )
     }
@@ -62,12 +67,11 @@ class MainViewModel(
             Timber.d("Already loading")
             return
         }
-        page = 0
         status.value = Status.LOADING
 
         disposables.add(
                 surveysApi.auth()
-                        .concatMap { accessToken -> surveysApi.getSurveyList(accessToken.access_token, page) }
+                        .concatMap { accessToken -> surveysApi.getSurveyList(accessToken.access_token, 0) }
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
@@ -82,32 +86,50 @@ class MainViewModel(
     }
 
     private fun onSurveyFetched(surveyList: List<Survey>, clear: Boolean) {
-        canLoadMore = surveyList.size >= BuildConfig.PAGE_UNIT
-
         disposables.add(
                 Observable.fromCallable {
                     if (clear)
                         surveyDao.deleteAll()
                     surveyDao.saveAll(surveyList)
-                    status.postValue(if (surveyDao.count() < 1) Status.EMPTY else Status.LOADED)
+                    status.postValue(if (surveyDao.count() > 0) Status.LOADED else Status.EMPTY)
                 }.subscribeOn(Schedulers.io())
                         .observeOn(Schedulers.io())
-                        .subscribe(
-                                { Timber.d("Inserted ${surveyList.size} surveys from API in DB...") },
-                                { error -> Timber.e(error) }
-                        )
+                        .subscribe({
+                            Timber.d("Inserted ${surveyList.size} surveys from API in DB...")
+                            canLoadMore = surveyList.isNotEmpty()
+                        }, { error ->
+                            Timber.e(error)
+                        })
         )
     }
 
     private fun onSurveyFailed(error: Throwable) {
         Timber.e(error, error.localizedMessage)
-        status.value = Status.FAILED
-        toastLiveEvent.value = error.localizedMessage
+        canLoadMore = false
+        disposables.add(
+                Observable.fromCallable {
+                    if (surveyDao.count() < 1) {
+                        status.postValue(Status.FAILED)
+                        toastLiveEvent.postValue(error.localizedMessage)
+                    }
+                }.subscribeOn(Schedulers.io())
+                        .observeOn(Schedulers.io())
+                        .subscribe(
+                                { Timber.d("API calling has failed.") },
+                                { error -> Timber.e(error) }
+                        )
+        )
+
     }
 
-    fun onClickSurvey(item: Survey) {
+    fun onClickSurvey(view: ImageView, item: Survey) {
         Timber.d("onClickSurvey() - surveyId=%s", item.id)
-        fragment.activity?.startActivity<DetailActivity>("id" to item.id)
+        // navDetail.value = item
+
+        val intent = Intent(fragment.activity!!, DetailActivity::class.java)
+        intent.putExtra("id", item.id)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(fragment.activity!!, view, "coverImage")
+        ContextCompat.startActivity(fragment.activity!!, intent, options.toBundle())
     }
 
     override fun canLoadMore(): Boolean {
@@ -118,10 +140,9 @@ class MainViewModel(
         Timber.d("loadMore()")
 
         if (canLoadMore) {
-            page += 1
             disposables.add(
                     surveysApi.auth()
-                            .concatMap { accessToken -> surveysApi.getSurveyList(accessToken.access_token, page) }
+                            .concatMap { accessToken -> surveysApi.getSurveyList(accessToken.access_token, items.size / BuildConfig.PAGE_UNIT) }
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
