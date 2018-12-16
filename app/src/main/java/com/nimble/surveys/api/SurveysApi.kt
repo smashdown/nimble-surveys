@@ -22,6 +22,10 @@ interface SurveysApi {
 
     @GET("surveys.json")
     @Headers("Content-type: application/json")
-    fun getSurveyList(@Query("access_token") accessToken: String): Observable<List<Survey>>
+    fun getSurveyList(
+        @Query("access_token") accessToken: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int = BuildConfig.PAGE_UNIT
+    ): Observable<List<Survey>>
 
 }

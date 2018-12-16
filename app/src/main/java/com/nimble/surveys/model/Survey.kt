@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
+import java.util.*
 
 @Entity(tableName = "surveys")
 data class Survey(
@@ -27,12 +28,16 @@ data class Survey(
 
         @ColumnInfo(name = "cover_image_url")
         @Json(name = "cover_image_url")
-        var coverImageUrl: String = "" // "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_",
+        var coverImageUrl: String = "", // "https://dhdbhh0jsld0o.cloudfront.net/m/1ea51560991bcb7d00d0_",
 
         // var "cover_background_color": null,
         // var "type": "Restaurant",
-        // var "created_at": "2017-01-23T14:48:12.991+07:00",
-        // var "active_at": "2015-10-08T14:04:00.000+07:00",
+        @ColumnInfo(name = "created_at")
+        @Json(name = "created_at")
+        var createdAt: Date = Date(), // "2017-01-23T14:48:12.991+07:00",
+        @ColumnInfo(name = "active_at")
+        @Json(name = "active_at")
+        var activeAt: Date = Date() // "2015-10-08T14:04:00.000+07:00",
         // var "inactive_at": null,
         // var "survey_version": 0,
         // var "short_url": "Scarlettbkk",

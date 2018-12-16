@@ -18,11 +18,13 @@ android {
             buildConfigField 'String', 'OAUTH_GRANT_TYPE', '"password"'
             buildConfigField 'String', 'OAUTH_USERNAME', '"carlos@nimbl3.com"'
             buildConfigField 'String', 'OAUTH_PASSWORD', '"antikera"'
+            buildConfigField 'int', 'PAGE_UNIT', '10'
         }
         release {
             buildConfigField 'String', 'OAUTH_GRANT_TYPE', '"password"'
             buildConfigField 'String', 'OAUTH_USERNAME', '"carlos@nimbl3.com"'
             buildConfigField 'String', 'OAUTH_PASSWORD', '"antikera"'
+            buildConfigField 'int', 'PAGE_UNIT', '10'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
