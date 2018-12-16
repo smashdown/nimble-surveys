@@ -8,11 +8,13 @@ import com.nimble.surveys.base.BaseViewModel
 import com.nimble.surveys.model.Survey
 import com.nimble.surveys.model.common.Status
 import com.nimble.surveys.repository.SurveyDao
+import com.nimble.surveys.ui.detail.DetailActivity
 import com.nimble.surveys.ui.main.adapter.SurveyListAdapter
 import com.nimble.surveys.utils.arch.SingleLiveEvent
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import org.jetbrains.anko.startActivity
 import timber.log.Timber
 
 class MainViewModel(
@@ -24,7 +26,8 @@ class MainViewModel(
     val items: MutableList<Survey> = mutableListOf()
     val status: SingleLiveEvent<Status> = SingleLiveEvent(Status.EMPTY)
     val adapter: SurveyListAdapter = SurveyListAdapter(this, items)
-    val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(fragment.context)
+    val layoutManager: RecyclerView.LayoutManager
+        get() = LinearLayoutManager(fragment.context)
     val indicatorCountChanged: SingleLiveEvent<Int> = SingleLiveEvent(0)
 
     fun loadSurveys() {
@@ -94,13 +97,13 @@ class MainViewModel(
 
     fun onClickSurvey(item: Survey) {
         Timber.d("onClickSurvey() - surveyId=%s", item.id)
+        fragment.activity?.startActivity<DetailActivity>("id" to item.id)
     }
 
     fun onImageLoadFailed(survey: Survey) {
         Timber.d("onImageLoadFailed() - url=%s", survey)
         items.forEach { item ->
             if (item.id == survey.id) {
-                item.coverImageAvailable = false
                 adapter.notifyDataSetChanged()
             }
         }

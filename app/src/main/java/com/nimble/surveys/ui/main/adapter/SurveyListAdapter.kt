@@ -3,13 +3,13 @@ package com.nimble.surveys.ui.main.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.nimble.surveys.databinding.ViewSurveyListItemBinding
 import com.nimble.surveys.model.Survey
 import com.nimble.surveys.ui.main.MainViewModel
-import com.nimble.surveys.databinding.ViewSurveyListItemBinding
 
 class SurveyListAdapter(
-    private val viewModel: MainViewModel,
-    private val items: List<Survey>
+        private val viewModel: MainViewModel,
+        private val items: List<Survey>
 ) : RecyclerView.Adapter<SurveyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SurveyViewHolder {
