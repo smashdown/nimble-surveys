@@ -11,6 +11,9 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Main" parent="AppTheme.NoActionBar">
         <item name="android:homeAsUpIndicator">@drawable/ic_refresh_white_24dp</item>
     </style>
 

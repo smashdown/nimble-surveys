@@ -17,9 +17,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, DummyViewModel>(DummyView
         setSupportActionBar(binding.appBar.toolbar)
 
         val params = ActionBar.LayoutParams(
-                ActionBar.LayoutParams.WRAP_CONTENT,
-                ActionBar.LayoutParams.MATCH_PARENT,
-                Gravity.CENTER)
+            ActionBar.LayoutParams.WRAP_CONTENT,
+            ActionBar.LayoutParams.MATCH_PARENT,
+            Gravity.CENTER
+        )
 
         // To put app title on center of actionBar
         supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
