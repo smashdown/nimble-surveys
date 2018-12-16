@@ -70,7 +70,7 @@ class MainViewModel(
     }
 
     fun onClickMenu() {
-        // DO NOTHING FOR NOW
+        toastLiveEvent.value = "Menu button clicked"
     }
 
     private fun onSurveyFetched(surveyList: List<Survey>) {
@@ -98,14 +98,5 @@ class MainViewModel(
     fun onClickSurvey(item: Survey) {
         Timber.d("onClickSurvey() - surveyId=%s", item.id)
         fragment.activity?.startActivity<DetailActivity>("id" to item.id)
-    }
-
-    fun onImageLoadFailed(survey: Survey) {
-        Timber.d("onImageLoadFailed() - url=%s", survey)
-        items.forEach { item ->
-            if (item.id == survey.id) {
-                adapter.notifyDataSetChanged()
-            }
-        }
     }
 }

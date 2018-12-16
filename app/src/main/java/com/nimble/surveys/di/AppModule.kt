@@ -20,7 +20,7 @@ val mvvmModules = module {
 
     viewModel { (activity: Activity) -> DummyViewModel() }
     viewModel { (fragment: Fragment) -> MainViewModel(fragment, get(), get()) }
-    viewModel { (fragment: Fragment) -> DetailViewModel(fragment, get(), get()) }
+    viewModel { (fragment: Fragment) -> DetailViewModel(fragment, get()) }
 
     single { createMoshi() }
 }
@@ -28,7 +28,7 @@ val mvvmModules = module {
 fun createMoshi(): Moshi {
     return Moshi
             .Builder()
-            .add(NULL_TO_EMPTY_STRING_ADAPTER)
+            .add(NullToEmptyStringAdapter)
             .add(KotlinJsonAdapterFactory())
             .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
             .build()
@@ -41,7 +41,8 @@ val rxModule = module {
 // Gather all app modules
 val appModules = listOf(mvvmModules, rxModule)
 
-object NULL_TO_EMPTY_STRING_ADAPTER {
+// To support null value converting on Moshi
+object NullToEmptyStringAdapter {
     @FromJson
     fun fromJson(reader: JsonReader): String {
         if (reader.peek() != JsonReader.Token.NULL) {

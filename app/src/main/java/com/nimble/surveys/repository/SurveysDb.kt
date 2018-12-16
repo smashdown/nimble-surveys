@@ -6,10 +6,11 @@ import androidx.room.TypeConverters
 import com.nimble.surveys.model.Survey
 
 @Database(
-    entities = [
-        Survey::class],
-    version = 1,
-    exportSchema = false
+        entities = [
+            Survey::class
+        ],
+        version = 1,
+        exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class SurveysDb : RoomDatabase() {

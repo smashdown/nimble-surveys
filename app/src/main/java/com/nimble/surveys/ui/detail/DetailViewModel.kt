@@ -3,7 +3,6 @@ package com.nimble.surveys.ui.detail
 import android.content.Intent
 import androidx.fragment.app.Fragment
 import com.nimble.surveys.R
-import com.nimble.surveys.api.SurveysApi
 import com.nimble.surveys.base.BaseViewModel
 import com.nimble.surveys.model.Survey
 import com.nimble.surveys.repository.SurveyDao
@@ -14,7 +13,6 @@ import timber.log.Timber
 
 class DetailViewModel(
         private val fragment: Fragment,
-        private val surveysApi: SurveysApi,
         private val surveyDao: SurveyDao
 ) : BaseViewModel() {
 
