@@ -86,6 +86,10 @@ abstract class BaseActivity<B : ViewDataBinding, out VM : BaseViewModel>(clazz: 
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onBackPressed() {
+        supportFinishAfterTransition()
+    }
+
     override fun finish() {
         super.finish()
 

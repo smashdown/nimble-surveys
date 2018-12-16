@@ -11,7 +11,6 @@ class SurveyListAdapter(
         private val viewModel: MainViewModel,
         private val items: List<Survey>
 ) : RecyclerView.Adapter<SurveyViewHolder>() {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SurveyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ViewSurveyListItemBinding.inflate(inflater, parent, false)
@@ -23,4 +22,8 @@ class SurveyListAdapter(
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: SurveyViewHolder, position: Int) = holder.bind(items[position])
+
+    override fun getItemId(position: Int): Long {
+        return items[position].id.hashCode().toLong()
+    }
 }

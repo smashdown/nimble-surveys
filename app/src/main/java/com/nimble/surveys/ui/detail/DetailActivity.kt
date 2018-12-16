@@ -38,4 +38,8 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DummyViewModel>(Dummy
             })
         }
     }
+
+    override fun getTransitionAnimationDirection(): HSTransitionDirection {
+        return HSTransitionDirection.NONE
+    }
 }
