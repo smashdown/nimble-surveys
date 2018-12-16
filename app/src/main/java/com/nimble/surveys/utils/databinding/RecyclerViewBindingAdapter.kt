@@ -2,7 +2,6 @@ package com.nimble.surveys.utils.databinding
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 object RecyclerViewBindingAdapter {
     @JvmStatic
@@ -22,9 +21,4 @@ object RecyclerViewBindingAdapter {
         }
     }
 
-    @JvmStatic
-    @BindingAdapter("isRefreshing")
-    fun setAdapter(swipeRefreshLayout: SwipeRefreshLayout, isRefreshing: Boolean) {
-        swipeRefreshLayout.isRefreshing = isRefreshing
-    }
 }
