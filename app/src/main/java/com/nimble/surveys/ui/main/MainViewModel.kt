@@ -35,8 +35,6 @@ class MainViewModel(
                         .subscribe { surveys ->
                             Timber.d("survey count=%s", surveys.size)
 
-                            status.value = if (surveys.isEmpty()) Status.EMPTY else Status.LOADED
-
                             items.clear()
                             items.addAll(surveys)
                             indicatorCountChanged.value = surveys.size
@@ -73,6 +71,8 @@ class MainViewModel(
     }
 
     private fun onSurveyFetched(surveyList: List<Survey>) {
+        status.value = if (surveyList.isEmpty()) Status.EMPTY else Status.LOADED
+
         disposables.add(
                 Observable.fromCallable {
                     surveyDao.deleteAll()

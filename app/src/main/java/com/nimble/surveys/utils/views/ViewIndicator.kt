@@ -3,12 +3,12 @@ package com.nimble.surveys.utils.views
 import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
+import android.os.Handler
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
-import androidx.core.view.forEach
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nimble.surveys.R
@@ -77,10 +77,10 @@ open class ViewIndicator : LinearLayout {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(
-            context,
-            attrs,
-            defStyleAttr,
-            defStyleRes
+        context,
+        attrs,
+        defStyleAttr,
+        defStyleRes
     ) {
         init(context, attrs)
     }
@@ -101,12 +101,12 @@ open class ViewIndicator : LinearLayout {
         mIndicatorMargin = typedArray.getDimensionPixelSize(R.styleable.AnyViewIndicator_avi_margin, -1)
 
         mIndicatorBackgroundResId = typedArray.getResourceId(
-                R.styleable.AnyViewIndicator_avi_drawable,
-                R.drawable.white_radius
+            R.styleable.AnyViewIndicator_avi_drawable,
+            R.drawable.white_radius
         )
         mIndicatorUnselectedBackgroundResId = typedArray.getResourceId(
-                R.styleable.AnyViewIndicator_avi_drawable_unselected,
-                mIndicatorBackgroundResId
+            R.styleable.AnyViewIndicator_avi_drawable_unselected,
+            mIndicatorBackgroundResId
         )
 
         val orientation = typedArray.getInt(R.styleable.AnyViewIndicator_avi_orientation, -1)
@@ -120,9 +120,9 @@ open class ViewIndicator : LinearLayout {
 
     @JvmOverloads
     fun configureIndicator(
-            indicatorWidth: Int, indicatorHeight: Int, indicatorMargin: Int,
-            @DrawableRes indicatorBackgroundId: Int = R.drawable.white_radius,
-            @DrawableRes indicatorUnselectedBackgroundId: Int = R.drawable.white_radius
+        indicatorWidth: Int, indicatorHeight: Int, indicatorMargin: Int,
+        @DrawableRes indicatorBackgroundId: Int = R.drawable.white_radius,
+        @DrawableRes indicatorUnselectedBackgroundId: Int = R.drawable.white_radius
     ) {
 
         mIndicatorWidth = indicatorWidth
@@ -210,9 +210,10 @@ open class ViewIndicator : LinearLayout {
         indicator.setBackgroundResource(backgroundDrawableId)
         indicator.setOnClickListener { view ->
             recyclerView?.let {
+                Timber.d("pos=%d", pos)
+
                 it.smoothScrollToPosition(pos)
                 currentPosition = pos
-                onCurrentLocationChange()
             }
             Timber.d("pos=%d", pos)
         }
