@@ -65,7 +65,9 @@ abstract class BaseActivity<B : ViewDataBinding, out VM : BaseViewModel>(clazz: 
 
     open fun observeViewModel() {
         viewModel.toastLiveEvent
-            .observe(this, Observer { stringResId -> toast(stringResId) })
+            .observe(this, Observer { stringResId -> toast(stringResId.toInt()) })
+        viewModel.toastStringLiveEvent
+            .observe(this, Observer { string -> toast(string) })
 
         viewModel.finishEvent
             .observe(this, Observer { intent ->

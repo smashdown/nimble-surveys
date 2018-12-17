@@ -41,6 +41,9 @@ android {
         javaMaxHeapSize "16g"
     }
     dataBinding.enabled = true
+    testOptions {
+        unitTests.includeAndroidResources true
+    }
 }
 
 dependencies {
@@ -62,8 +65,8 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version" // use kapt for Kotlin
 
     // DI
-    implementation 'org.koin:koin-androidx-viewmodel:1.0.1'
-    testImplementation 'org.koin:koin-test:1.0.0-beta-3'
+    implementation 'org.koin:koin-androidx-viewmodel:1.0.2'
+    testImplementation 'org.koin:koin-test:1.0.2'
 
     // RETROFIT
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
@@ -94,6 +97,9 @@ dependencies {
     implementation 'me.relex:circleindicator:2.1.0'
 
     testImplementation 'junit:junit:4.12'
+    testImplementation "org.mockito:mockito-core:2.21.0"
+    testImplementation "androidx.arch.core:core-testing:2.0.0"
+
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
