@@ -1,15 +1,11 @@
 package com.nimble.surveys
 
 import android.app.Application
-import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nimble.surveys.api.SurveysApi
-import com.nimble.surveys.di.appModules
-import com.nimble.surveys.di.dataModule
-import com.nimble.surveys.di.networkModule
 import com.nimble.surveys.model.AccessToken
 import com.nimble.surveys.model.Survey
 import com.nimble.surveys.repository.SurveyDao
@@ -18,36 +14,32 @@ import io.reactivex.Observable
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.koin.android.ext.koin.with
-import org.koin.standalone.StandAloneContext.startKoin
-import org.koin.standalone.StandAloneContext.stopKoin
-import org.koin.standalone.inject
-import org.koin.test.KoinTest
 import org.mockito.Mockito
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 
-class MainViewModelTest : KoinTest {
+class MainViewModelTest {
     inline fun <reified T : Any> mock() = Mockito.mock(T::class.java)
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
     private var context: Application = mock(Application::class.java)
-    private val viewModel: MainViewModel by inject()
+
+    private lateinit var surveysApi: SurveysApi
+    private lateinit var surveyDao: SurveyDao
+    private lateinit var mainViewModel: MainViewModel
 
     @Before
     fun setupTasksViewModel() {
-        startKoin(appModules + dataModule + networkModule) with (context)
-
         MockitoAnnotations.initMocks(this)
 
-        `when`<Context>(context.applicationContext).thenReturn(context)
-        `when`(context.resources).thenReturn(mock())
+        surveysApi = mock()
+        surveyDao = mock()
+        mainViewModel = MainViewModel(surveysApi, surveyDao)
 
         // To support Rx test
         RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }
@@ -56,16 +48,11 @@ class MainViewModelTest : KoinTest {
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
     }
 
-    @After
-    fun after() {
-        stopKoin()
-    }
-
     @Test
     fun testOnClickMenu() {
-        with(viewModel) {
+        with(mainViewModel) {
             val observer: Observer<Int> = mock()
-            viewModel.toastLiveEvent.observeForever(observer)
+            mainViewModel.toastLiveEvent.observeForever(observer)
 
             onClickMenu()
 
@@ -75,13 +62,13 @@ class MainViewModelTest : KoinTest {
 
     @Test
     fun testOnClickSurvey() {
-        with(viewModel) {
+        with(mainViewModel) {
             val view: ImageView = mock()
             val survey: Survey = mock()
             survey.id = "temp"
 
             val observer: Observer<View> = mock()
-            viewModel.navMain.observeForever(observer)
+            mainViewModel.navMain.observeForever(observer)
 
             onClickSurvey(view, survey)
 
@@ -91,9 +78,6 @@ class MainViewModelTest : KoinTest {
 
     @Test
     fun testOnRefresh() {
-        val surveysApi: SurveysApi = mock()
-        val surveyDao: SurveyDao = mock()
-        val mainViewModel = MainViewModel(surveysApi, surveyDao)
         `when`(surveysApi.auth()).thenReturn(Observable.just(AccessToken("123", 123, 123, "bearer")))
         `when`(surveysApi.getSurveyList(anyString(), anyInt(), anyInt())).thenReturn(Observable.just(listOf()))
 
