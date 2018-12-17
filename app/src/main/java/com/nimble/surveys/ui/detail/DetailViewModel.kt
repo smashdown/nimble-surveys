@@ -1,7 +1,6 @@
 package com.nimble.surveys.ui.detail
 
 import android.content.Intent
-import androidx.fragment.app.Fragment
 import com.nimble.surveys.R
 import com.nimble.surveys.base.BaseViewModel
 import com.nimble.surveys.model.Survey
@@ -12,8 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 class DetailViewModel(
-        private val fragment: Fragment,
-        private val surveyDao: SurveyDao
+    private val surveyDao: SurveyDao
 ) : BaseViewModel() {
 
     val title = SingleLiveEvent<String>()
@@ -29,12 +27,12 @@ class DetailViewModel(
         Timber.d("surveyId=%s", surveyId)
         surveyId?.let {
             surveyDao.findById(surveyId)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                            { result -> onSurveyFetched(result) },
-                            { error -> onSurveyFetchFailed(error) }
-                    )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { result -> onSurveyFetched(result) },
+                    { error -> onSurveyFetchFailed(error) }
+                )
             return true
         }
         return false
@@ -48,7 +46,7 @@ class DetailViewModel(
 
     private fun onSurveyFetchFailed(error: Throwable) {
         Timber.e(error)
-        toastLiveEvent.value = fragment.getString(R.string.cannot_connect)
+        toastLiveEvent.value = R.string.cannot_connect
         finishEvent.value = null
     }
 }

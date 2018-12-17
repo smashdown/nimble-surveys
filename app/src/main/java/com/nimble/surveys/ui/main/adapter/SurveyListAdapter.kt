@@ -7,10 +7,11 @@ import com.nimble.surveys.databinding.ViewSurveyListItemBinding
 import com.nimble.surveys.model.Survey
 import com.nimble.surveys.ui.main.MainViewModel
 
-class SurveyListAdapter(
-        private val viewModel: MainViewModel,
-        private val items: List<Survey>
+open class SurveyListAdapter(
+    private val viewModel: MainViewModel
 ) : RecyclerView.Adapter<SurveyViewHolder>() {
+    val items = mutableListOf<Survey>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SurveyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ViewSurveyListItemBinding.inflate(inflater, parent, false)

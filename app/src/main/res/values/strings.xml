@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Surveys</string>
     <string name="menu">Menu</string>
+    <string name="menu_clicked">Menu button clicked</string>
 
     <!-- Empty -->
     <string name="no_survey_title">No Survey</string>

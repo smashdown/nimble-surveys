@@ -32,6 +32,9 @@ abstract class BaseFragment<DB : ViewDataBinding, out VM : BaseViewModel>(clazz:
         binding.setLifecycleOwner(this)
         binding.setVariable(BR.vm, viewModel)
 
+        // initViews in fragment layer(from the limitation of data binding, sometimes we need to init view in view)
+        initViews(savedInstanceState ?: arguments)
+
         viewModel.initData(activity?.intent)
         viewModel.initData(savedInstanceState ?: arguments)
 
@@ -39,9 +42,6 @@ abstract class BaseFragment<DB : ViewDataBinding, out VM : BaseViewModel>(clazz:
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // initViews in fragment layer
-        initViews(savedInstanceState ?: arguments)
-
         // initViews in ViewModel layer
         viewModel.initViews(activity?.intent)
         viewModel.initViews(savedInstanceState ?: arguments)
@@ -51,7 +51,10 @@ abstract class BaseFragment<DB : ViewDataBinding, out VM : BaseViewModel>(clazz:
 
     open fun observeViewModel() {
         viewModel.toastLiveEvent
-            .observe(this, Observer { s -> activity?.toast(s) })
+            .observe(this, Observer { s -> activity?.toast(s.toInt()) })
+
+        viewModel.toastStringLiveEvent
+            .observe(this, Observer { string -> activity?.toast(string) })
 
         viewModel.finishEvent
             .observe(this, Observer { intent ->
