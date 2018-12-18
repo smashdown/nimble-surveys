@@ -19,9 +19,6 @@ interface SurveyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveAll(surveyList: List<Survey>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun save(vararg survey: Survey)
-
     @Query("DELETE FROM surveys")
     fun deleteAll()
 

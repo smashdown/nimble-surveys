@@ -1,4 +1,4 @@
-package com.nimble.surveys
+package com.nimble.surveys.utils
 
 import io.reactivex.Scheduler
 import io.reactivex.android.plugins.RxAndroidPlugins

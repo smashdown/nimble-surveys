@@ -1,4 +1,4 @@
-package com.nimble.surveys
+package com.nimble.surveys.ui
 
 import android.app.Application
 import android.view.View
@@ -26,8 +26,6 @@ class MainViewModelTest {
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
-
-    private var context: Application = mock(Application::class.java)
 
     private lateinit var surveysApi: SurveysApi
     private lateinit var surveyDao: SurveyDao

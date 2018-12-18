@@ -1,9 +1,10 @@
-package com.nimble.surveys
+package com.nimble.surveys.ui
 
 
 import android.content.Intent
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.nimble.surveys.utils.RxImmediateSchedulerRule
 import com.nimble.surveys.model.Survey
 import com.nimble.surveys.repository.SurveyDao
 import com.nimble.surveys.ui.detail.DetailViewModel
