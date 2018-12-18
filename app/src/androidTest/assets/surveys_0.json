@@ -1,7 +1,7 @@
 [
   {
     "id": "df5c6cad88e3865aede0",
-    "title": "Oishi Buffet",
+    "title": "Oishi Buffet111",
     "description": "Customer Experience Survey",
     "access_code_prompt": "Please enter bill number",
     "thank_email_above_threshold": "<span style=\"font-size:14px\"><span style=\"font-family:arial,helvetica,sans-serif\">Dear {name},<br />&nbsp;<br />Thank you for visiting Oishi Buffet and for taking the time to complete our customer feedback survey!<br />&nbsp;<br />Your feedback is very important to us and each survey is read individually by the management and owners shortly after it is sent. We discuss comments and suggestions at our daily meetings and use them to constantly improve our services.<br />&nbsp;<br />Thank you once again and we look forward to seeing you soon!<br />&nbsp;<br />The Team at Oishi Buffet Restaurant</span></span>",

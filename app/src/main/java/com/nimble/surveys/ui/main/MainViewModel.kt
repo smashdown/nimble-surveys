@@ -19,7 +19,7 @@ import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 class MainViewModel(
-    val surveysApi: SurveysApi,
+    var surveysApi: SurveysApi,
     private val surveyDao: SurveyDao
 ) : BaseViewModel(), LoadMoreListener {
 
@@ -71,11 +71,21 @@ class MainViewModel(
 
     override fun onLoadMore() {
         Timber.d("loadMore()")
+        if (status.value == Status.LOADING) {
+            Timber.d("Already loading")
+            return
+        }
+        status.value = Status.LOADING
 
         if (canLoadMore) {
             disposables.add(
                 surveysApi.auth()
-                    .concatMap { accessToken -> surveysApi.getSurveyList(accessToken.access_token, adapter!!.items.size / BuildConfig.PAGE_UNIT) }
+                    .concatMap { accessToken ->
+                        surveysApi.getSurveyList(
+                            accessToken.access_token,
+                            adapter!!.items.size / BuildConfig.PAGE_UNIT
+                        )
+                    }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
@@ -107,6 +117,7 @@ class MainViewModel(
     private fun onSurveyFailed(error: Throwable) {
         Timber.e(error, error.localizedMessage)
         canLoadMore = false
+
         disposables.add(
             Observable.fromCallable {
                 if (surveyDao.count() < 1) {
