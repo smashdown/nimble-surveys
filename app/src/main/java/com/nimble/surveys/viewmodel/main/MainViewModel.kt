@@ -62,7 +62,7 @@ class MainViewModel(
             surveysApi.auth()
                 .concatMap { accessToken ->
                     surveysApi.getSurveyList(
-                        accessToken.access_token,
+                        accessToken.accessToken,
                         adapter.items.size / BuildConfig.PAGE_UNIT
                     )
                 }
@@ -85,7 +85,7 @@ class MainViewModel(
 
         launch {
             surveysApi.auth()
-                .concatMap { accessToken -> surveysApi.getSurveyList(accessToken.access_token, 0) }
+                .concatMap { accessToken -> surveysApi.getSurveyList(accessToken.accessToken, 0) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
