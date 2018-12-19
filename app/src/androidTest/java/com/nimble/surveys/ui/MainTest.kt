@@ -19,13 +19,14 @@ import com.nimble.surveys.R
 import com.nimble.surveys.api.SurveysApi
 import com.nimble.surveys.di.NetworkProperties
 import com.nimble.surveys.ui.main.MainActivity
-import com.nimble.surveys.utils.RecyclerViewItemCountAssertion
+import com.nimble.surveys.ui.main.MainFragment
 import com.squareup.moshi.Moshi
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.hamcrest.CoreMatchers.*
 import org.junit.After
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -106,15 +107,23 @@ class MainTest : KoinTest {
             .perform(click())
 
         Thread.sleep(1000) // even we're using idling resource, need to wait for layout update.
-        onView(withId(R.id.recyclerView)).check(RecyclerViewItemCountAssertion(10))
 
-        // to scroll down to bottom of list
-        onView(withId(R.id.recyclerView)).perform(ViewActions.swipeUp())
-        onView(withId(R.id.recyclerView)).perform(ViewActions.swipeUp())
-        onView(withId(R.id.recyclerView)).perform(ViewActions.swipeUp())
+        // to scroll 10 times to get bottom of list
+        onView(withId(R.id.viewPager)).perform(ViewActions.swipeUp())
+        onView(withId(R.id.viewPager)).perform(ViewActions.swipeUp())
+        onView(withId(R.id.viewPager)).perform(ViewActions.swipeUp())
+        onView(withId(R.id.viewPager)).perform(ViewActions.swipeUp())
+        onView(withId(R.id.viewPager)).perform(ViewActions.swipeUp())
+        onView(withId(R.id.viewPager)).perform(ViewActions.swipeUp())
+        onView(withId(R.id.viewPager)).perform(ViewActions.swipeUp())
+        onView(withId(R.id.viewPager)).perform(ViewActions.swipeUp())
+        onView(withId(R.id.viewPager)).perform(ViewActions.swipeUp())
+        onView(withId(R.id.viewPager)).perform(ViewActions.swipeUp())
 
         Thread.sleep(1000) // even we're using idling resource, need to wait for layout update.
-        onView(withId(R.id.recyclerView)).check(RecyclerViewItemCountAssertion(20))
+
+        val mainFragment = activity!!.supportFragmentManager.findFragmentById(R.id.mainFragment) as MainFragment?
+        Assert.assertThat(mainFragment!!.viewModel.adapter.items.size, `is`(20))
     }
 }
 

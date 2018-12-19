@@ -2,6 +2,7 @@ package com.nimble.surveys.utils.databinding
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.request.RequestOptions
 import com.nimble.surveys.GlideApp
 import com.nimble.surveys.R
 
@@ -10,10 +11,14 @@ object ImageViewBindingAdapter {
     @BindingAdapter("imageUrl")
     fun setSurveyUrl(view: ImageView, imageUrl: String) {
         if (imageUrl.isNotEmpty()) {
+            val options = RequestOptions().centerCrop()
+
             GlideApp.with(view.context)
-                    .load(imageUrl)
-                    .placeholder(R.drawable.bg_image_not_available)
-                    .into(view)
+                .load(imageUrl)
+                .apply(options)
+                .dontAnimate()
+                .placeholder(R.drawable.bg_image_not_available)
+                .into(view)
         }
     }
 
