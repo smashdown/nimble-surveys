@@ -18,9 +18,9 @@
         <item name="android:homeAsUpIndicator">@drawable/ic_refresh_white_24dp</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
     <style name="outlineText">
         <item name="android:shadowColor">#000000</item>
@@ -28,4 +28,44 @@
         <item name="android:shadowDy">4</item>
         <item name="android:shadowRadius">8</item>
     </style>
+
+    <style name="TextMainTitle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:theme">@style/outlineText</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline5</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextMainDescription">
+        <item name="android:gravity">center</item>
+        <item name="android:theme">@style/outlineText</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="ButtonRoundedAccent">
+        <item name="android:background">@drawable/bg_rounded_button_accent</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextDetailDescription">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1</item>
+    </style>
+
+    <style name="TextDetailFooter">
+        <item name="android:lineSpacingExtra">4dip</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
+    </style>
+
+    <style name="ImageCenterWarning">
+        <item name="android:layout_width">64dip</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/common_margin_small</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:tint">@color/colorAccent</item>
+    </style>
+
 </resources>

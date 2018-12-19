@@ -18,7 +18,6 @@
 
     </data>
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -37,18 +36,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            style="@style/TextMainTitle"
             android:id="@+id/tvTitle"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginStart="@dimen/common_margin_small"
+            android:layout_marginEnd="@dimen/common_margin_small"
+            android:layout_marginBottom="@dimen/common_margin_small"
             android:gravity="center"
             android:text="@{item.title}"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:theme="@style/outlineText"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,33 +53,27 @@
             tools:text="Title" />
 
         <TextView
+            style="@style/TextMainDescription"
             android:id="@+id/tvDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:gravity="center"
+            android:layout_marginStart="@dimen/common_margin_small"
+            android:layout_marginTop="@dimen/common_margin_small"
+            android:layout_marginEnd="@dimen/common_margin_small"
             android:text="@{item.description}"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:textColor="@android:color/white"
-            android:theme="@style/outlineText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle"
             tools:text="Description" />
 
         <Button
+            style="@style/ButtonRoundedAccent"
             android:id="@+id/btnTakeTheSurvey"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@drawable/bg_rounded_button_accent"
             android:onClick="@{() -> vm.onClickSurvey(ivBackground, item)}"
             android:text="@string/take_the_survey"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
