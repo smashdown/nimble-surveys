@@ -35,29 +35,27 @@
                 tools:src="@drawable/bg_image_not_available" />
 
             <TextView
+                style="@style/TextDetailDescription"
                 android:id="@+id/description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="@dimen/common_margin_small"
+                android:layout_marginTop="@dimen/common_margin_medium"
+                android:layout_marginEnd="@dimen/common_margin_small"
                 android:text="@{vm.survey.description}"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/coverImage"
                 tools:text="Welcome Message" />
 
             <TextView
+                style="@style/TextDetailFooter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:lineSpacingExtra="4dip"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_marginStart="@dimen/common_margin_medium"
+                android:layout_marginTop="@dimen/common_margin_medium"
+                android:layout_marginEnd="@dimen/common_margin_medium"
                 app:html='@{vm.survey.footerContent == null ? "" : vm.survey.footerContent}'
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -1,3 +1,8 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="common_margin_small">8dip</dimen>
+    <dimen name="common_margin_medium">16dp</dimen>
+    <dimen name="common_margin_large">32dp</dimen>
+
 </resources>
