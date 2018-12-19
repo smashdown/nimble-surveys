@@ -13,7 +13,6 @@ import retrofit2.http.Query
 interface SurveysApi {
 
     @POST("oauth/token")
-    @Headers("Content-type: application/json")
     fun auth(
         @Query("grant_type") grantType: String = BuildConfig.OAUTH_GRANT_TYPE,
         @Query("username") username: String = BuildConfig.OAUTH_USERNAME,
@@ -21,7 +20,6 @@ interface SurveysApi {
     ): Observable<AccessToken>
 
     @GET("surveys.json")
-    @Headers("Content-type: application/json")
     fun getSurveyList(
         @Query("access_token") accessToken: String,
         @Query("page") page: Int,

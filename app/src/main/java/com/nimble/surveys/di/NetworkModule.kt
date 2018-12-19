@@ -28,7 +28,17 @@ fun createOkHttpClient(): OkHttpClient {
         .connectTimeout(60L, TimeUnit.SECONDS)
         .readTimeout(60L, TimeUnit.SECONDS)
         .writeTimeout(60L, TimeUnit.SECONDS)
-        .addInterceptor(httpLoggingInterceptor).build()
+        .addInterceptor(httpLoggingInterceptor)
+        .addInterceptor {
+            val original = it.request()
+            val request = original.newBuilder()
+                .header("Content-type", "application/json")
+                .method(original.method(), original.body())
+                .build()
+
+            it.proceed(request)
+        }
+        .build()
 }
 
 inline fun <reified T> createWebService(okHttpClient: OkHttpClient, moshi: Moshi): T {
