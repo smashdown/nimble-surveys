@@ -20,6 +20,7 @@ import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
+import java.util.*
 
 class MainViewModelTest {
     inline fun <reified T : Any> mock() = Mockito.mock(T::class.java)
@@ -89,10 +90,37 @@ class MainViewModelTest {
         val surveysApi: SurveysApi = mock()
         val surveyDao: SurveyDao = mock()
         val mainViewModel = MainViewModel(surveysApi, surveyDao)
-        `when`(surveysApi.auth()).thenReturn(Observable.just(AccessToken("123", 123, 123, "bearer")))
-        `when`(surveysApi.getSurveyList(anyString(), anyInt(), anyInt())).thenReturn(Observable.just(listOf()))
 
-        mainViewModel.onLoadMore()
+        val survey1 = Survey("ID1", "TITLE", "", "", true, "", Date())
+        val survey2 = Survey("ID2", "TITLE", "", "", true, "", Date())
+        val survey3 = Survey("ID3", "TITLE", "", "", true, "", Date())
+        val survey4 = Survey("ID4", "TITLE", "", "", true, "", Date())
+        val survey5 = Survey("ID5", "TITLE", "", "", true, "", Date())
+        val survey6 = Survey("ID6", "TITLE", "", "", true, "", Date())
+        val survey7 = Survey("ID7", "TITLE", "", "", true, "", Date())
+        val survey8 = Survey("ID8", "TITLE", "", "", true, "", Date())
+        val survey9 = Survey("ID9", "TITLE", "", "", true, "", Date())
+        val survey10 = Survey("ID10", "TITLE", "", "", true, "", Date())
+
+        `when`(surveysApi.auth()).thenReturn(Observable.just(AccessToken("123", 123, 123, "bearer")))
+        `when`(surveysApi.getSurveyList(anyString(), anyInt(), anyInt())).thenReturn(
+            Observable.just(
+                listOf(
+                    survey1,
+                    survey2,
+                    survey3,
+                    survey4,
+                    survey5,
+                    survey6,
+                    survey7,
+                    survey8,
+                    survey9,
+                    survey10
+                )
+            )
+        )
+
+        mainViewModel.onPageSelected(9)
 
         verify(surveyDao, never()).deleteAll()
     }

@@ -29,7 +29,7 @@ class MainViewModel(
     val navMain = SingleLiveEvent<View>() // survey ID included in tag
 
     fun loadSurveys() {
-        disposables.add(
+        launch {
             surveyDao.findAll()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -40,7 +40,7 @@ class MainViewModel(
                     adapter.items.addAll(surveys)
                     adapter.notifyDataSetChanged()
                 }
-        )
+        }
     }
 
     override fun onPageSelected(position: Int) {
@@ -58,7 +58,7 @@ class MainViewModel(
 
         status.value = Status.LOADING
 
-        disposables.add(
+        launch {
             surveysApi.auth()
                 .concatMap { accessToken ->
                     surveysApi.getSurveyList(
@@ -72,7 +72,7 @@ class MainViewModel(
                     { result -> onSurveyFetched(result, false) },
                     { error -> onSurveyFailed(error) }
                 )
-        )
+        }
     }
 
     fun onRefresh() {
@@ -83,7 +83,7 @@ class MainViewModel(
         }
         status.value = Status.LOADING
 
-        disposables.add(
+        launch {
             surveysApi.auth()
                 .concatMap { accessToken -> surveysApi.getSurveyList(accessToken.access_token, 0) }
                 .subscribeOn(Schedulers.io())
@@ -92,11 +92,11 @@ class MainViewModel(
                     { result -> onSurveyFetched(result, true) },
                     { error -> onSurveyFailed(error) }
                 )
-        )
+        }
     }
 
     private fun onSurveyFetched(surveyList: List<Survey>, clear: Boolean) {
-        disposables.add(
+        launch {
             Observable.fromCallable {
                 if (clear)
                     surveyDao.deleteAll()
@@ -109,13 +109,13 @@ class MainViewModel(
                 }, { error ->
                     Timber.e(error)
                 })
-        )
+        }
     }
 
     private fun onSurveyFailed(error: Throwable) {
         Timber.e(error, error.localizedMessage)
 
-        disposables.add(
+        launch {
             Observable.fromCallable {
                 if (surveyDao.count() < 1) {
                     status.postValue(Status.FAILED)
@@ -127,7 +127,7 @@ class MainViewModel(
                     { Timber.d("API calling has failed.") },
                     { error -> Timber.e(error) }
                 )
-        )
+        }
 
     }
 

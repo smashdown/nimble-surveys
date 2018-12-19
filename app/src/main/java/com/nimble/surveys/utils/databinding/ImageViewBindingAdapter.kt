@@ -3,8 +3,8 @@ package com.nimble.surveys.utils.databinding
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.request.RequestOptions
-import com.nimble.surveys.GlideApp
 import com.nimble.surveys.R
+import com.nimble.surveys.utils.GlideApp
 
 object ImageViewBindingAdapter {
     @JvmStatic
@@ -21,5 +21,4 @@ object ImageViewBindingAdapter {
                 .into(view)
         }
     }
-
 }
