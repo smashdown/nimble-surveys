@@ -10,6 +10,10 @@ import com.nimble.surveys.databinding.FragmentMainBinding
 import com.nimble.surveys.ui.detail.DetailActivity
 
 class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(MainViewModel::class) {
+    companion object {
+        val ARG_ID = "id"
+    }
+
     override fun getLayoutRes(): Int = R.layout.fragment_main
 
     override fun observeViewModel() {
@@ -21,7 +25,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(MainViewMo
                 .toBundle()
 
             val intent = Intent(activity, DetailActivity::class.java)
-                .putExtra("id", it.getTag(R.id.ivBackground) as String)
+                .putExtra(ARG_ID, it.getTag(R.id.ivBackground) as String)
 
             ContextCompat.startActivity(activity!!, intent, options)
         })

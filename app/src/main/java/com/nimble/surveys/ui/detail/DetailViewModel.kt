@@ -5,6 +5,7 @@ import com.nimble.surveys.R
 import com.nimble.surveys.base.BaseViewModel
 import com.nimble.surveys.model.Survey
 import com.nimble.surveys.repository.SurveyDao
+import com.nimble.surveys.ui.main.MainFragment
 import com.nimble.surveys.utils.arch.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -22,7 +23,7 @@ class DetailViewModel(
     }
 
     override fun initViews(intent: Intent?): Boolean {
-        val surveyId = intent?.getStringExtra("id")
+        val surveyId = intent?.getStringExtra(MainFragment.ARG_ID)
 
         Timber.d("surveyId=%s", surveyId)
         surveyId?.let {
