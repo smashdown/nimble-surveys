@@ -1,9 +1,7 @@
 package com.nimble.surveys
 
 import android.app.Application
-import com.nimble.surveys.di.appModules
-import com.nimble.surveys.di.dataModule
-import com.nimble.surveys.di.networkModule
+import com.nimble.surveys.di.*
 import com.nimble.surveys.utils.LineNumberDebugTree
 import org.koin.android.ext.android.startKoin
 import timber.log.Timber
@@ -13,7 +11,7 @@ class SurveyApp : Application() {
         super.onCreate()
 
         // Start Koin
-        startKoin(this, appModules + dataModule + networkModule)
+        startKoin(this, listOf(jsonModule, dataModule, networkModule, rxModule, viewModelModules))
 
         // Set a logger
         if (BuildConfig.DEBUG) Timber.plant(LineNumberDebugTree())
