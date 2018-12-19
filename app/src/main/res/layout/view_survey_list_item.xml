@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="com.nimble.surveys.ui.main.MainViewModel" />
+            type="com.nimble.surveys.viewmodel.main.MainViewModel" />
 
         <variable
             name="item"

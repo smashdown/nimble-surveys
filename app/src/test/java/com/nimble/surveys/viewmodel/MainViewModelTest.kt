@@ -1,6 +1,5 @@
-package com.nimble.surveys.ui
+package com.nimble.surveys.viewmodel
 
-import android.app.Application
 import android.view.View
 import android.widget.ImageView
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -9,7 +8,7 @@ import com.nimble.surveys.api.SurveysApi
 import com.nimble.surveys.model.AccessToken
 import com.nimble.surveys.model.Survey
 import com.nimble.surveys.repository.SurveyDao
-import com.nimble.surveys.ui.main.MainViewModel
+import com.nimble.surveys.viewmodel.main.MainViewModel
 import io.reactivex.Observable
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.plugins.RxJavaPlugins

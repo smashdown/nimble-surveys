@@ -1,4 +1,4 @@
-package com.nimble.surveys.ui.main.adapter
+package com.nimble.surveys.viewmodel.main.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import com.nimble.surveys.databinding.ViewSurveyListItemBinding
 import com.nimble.surveys.model.Survey
-import com.nimble.surveys.ui.main.MainViewModel
+import com.nimble.surveys.viewmodel.main.MainViewModel
 
 class SurveyPagerAdapter(private val viewModel: MainViewModel) : PagerAdapter() {
 

@@ -1,4 +1,4 @@
-package com.nimble.surveys.utils.views
+package com.nimble.surveys.viewmodel.common
 
 interface OnPageSelected {
     fun onPageSelected(position: Int)

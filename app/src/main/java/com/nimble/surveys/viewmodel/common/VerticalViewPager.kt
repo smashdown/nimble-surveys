@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.nimble.surveys.utils.views
+package com.nimble.surveys.viewmodel.common
 
 import android.content.Context
 import android.util.AttributeSet
