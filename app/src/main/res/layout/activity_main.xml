@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.nimble.surveys.base.DummyViewModel" />
+            type="com.nimble.surveys.viewmodel.base.DummyViewModel" />
 
         <import type="android.view.View" />
 

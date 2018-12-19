@@ -14,19 +14,15 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        debug {
-            buildConfigField 'String', 'OAUTH_GRANT_TYPE', '"password"'
-            buildConfigField 'String', 'OAUTH_USERNAME', '"carlos@nimbl3.com"'
-            buildConfigField 'String', 'OAUTH_PASSWORD', '"antikera"'
-            buildConfigField 'int', 'PAGE_UNIT', '10'
-        }
         release {
-            buildConfigField 'String', 'OAUTH_GRANT_TYPE', '"password"'
-            buildConfigField 'String', 'OAUTH_USERNAME', '"carlos@nimbl3.com"'
-            buildConfigField 'String', 'OAUTH_PASSWORD', '"antikera"'
-            buildConfigField 'int', 'PAGE_UNIT', '10'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        applicationVariants.all { variant ->
+            variant.buildConfigField 'int', 'PAGE_UNIT', '10'
+            variant.buildConfigField "String", "OAUTH_GRANT_TYPE", "\"" + getGrantType() + "\""
+            variant.buildConfigField 'String', 'OAUTH_USERNAME', "\"" + getUserName() + "\""
+            variant.buildConfigField 'String', 'OAUTH_PASSWORD', "\"" + getPassword() + "\""
         }
     }
     sourceSets {
@@ -44,6 +40,24 @@ android {
     testOptions {
         unitTests.includeAndroidResources true
     }
+}
+
+def getGrantType() {
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('secrets.properties')))
+    return props['GRANT_TYPE']
+}
+
+def getUserName() {
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('secrets.properties')))
+    return props['USERNAME']
+}
+
+def getPassword() {
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('secrets.properties')))
+    return props['PASSWORD']
 }
 
 dependencies {
