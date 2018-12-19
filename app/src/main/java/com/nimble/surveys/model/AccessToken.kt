@@ -1,8 +1,14 @@
 package com.nimble.surveys.model
 
+import com.squareup.moshi.Json
+
 data class AccessToken(
-        val access_token: String,
-        val created_at: Int,
-        val expires_in: Int,
-        val token_type: String
+    @Json(name = "accessToken")
+    val accessToken: String,
+    @Json(name = "createdAt")
+    val createdAt: Int,
+    @Json(name = "expiresIn")
+    val expiresIn: Int,
+    @Json(name = "tokenType")
+    val tokenType: String
 )
