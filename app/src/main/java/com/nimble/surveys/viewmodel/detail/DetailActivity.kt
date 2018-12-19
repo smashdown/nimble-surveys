@@ -1,12 +1,12 @@
-package com.nimble.surveys.ui.detail
+package com.nimble.surveys.viewmodel.detail
 
 import android.view.Gravity
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.lifecycle.Observer
 import com.nimble.surveys.R
-import com.nimble.surveys.base.BaseActivity
-import com.nimble.surveys.base.DummyViewModel
+import com.nimble.surveys.viewmodel.base.BaseActivity
+import com.nimble.surveys.viewmodel.base.DummyViewModel
 import com.nimble.surveys.databinding.ActivityDetailBinding
 
 class DetailActivity : BaseActivity<ActivityDetailBinding, DummyViewModel>(DummyViewModel::class) {

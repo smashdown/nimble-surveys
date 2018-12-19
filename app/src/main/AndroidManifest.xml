@@ -16,7 +16,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".viewmodel.main.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/AppTheme.NoActionBar.Main">
             <intent-filter>
@@ -27,7 +27,7 @@
         </activity>
 
         <activity
-            android:name=".ui.detail.DetailActivity"
+            android:name=".viewmodel.detail.DetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
     </application>
 

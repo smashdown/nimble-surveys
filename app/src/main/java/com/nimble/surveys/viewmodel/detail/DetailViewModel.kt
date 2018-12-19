@@ -1,11 +1,11 @@
-package com.nimble.surveys.ui.detail
+package com.nimble.surveys.viewmodel.detail
 
 import android.content.Intent
 import com.nimble.surveys.R
-import com.nimble.surveys.base.BaseViewModel
+import com.nimble.surveys.viewmodel.base.BaseViewModel
 import com.nimble.surveys.model.Survey
 import com.nimble.surveys.repository.SurveyDao
-import com.nimble.surveys.ui.main.MainFragment
+import com.nimble.surveys.viewmodel.main.MainFragment
 import com.nimble.surveys.utils.arch.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

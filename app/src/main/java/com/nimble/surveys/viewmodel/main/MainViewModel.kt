@@ -1,17 +1,17 @@
-package com.nimble.surveys.ui.main
+package com.nimble.surveys.viewmodel.main
 
 import android.view.View
 import android.widget.ImageView
 import com.nimble.surveys.BuildConfig
 import com.nimble.surveys.R
 import com.nimble.surveys.api.SurveysApi
-import com.nimble.surveys.base.BaseViewModel
+import com.nimble.surveys.viewmodel.base.BaseViewModel
 import com.nimble.surveys.model.Survey
 import com.nimble.surveys.model.common.Status
 import com.nimble.surveys.repository.SurveyDao
-import com.nimble.surveys.ui.main.adapter.SurveyPagerAdapter
+import com.nimble.surveys.viewmodel.main.adapter.SurveyPagerAdapter
 import com.nimble.surveys.utils.arch.SingleLiveEvent
-import com.nimble.surveys.utils.views.OnPageSelected
+import com.nimble.surveys.viewmodel.common.OnPageSelected
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

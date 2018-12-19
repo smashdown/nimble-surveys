@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.nimble.surveys.ui.detail.DetailViewModel" />
+            type="com.nimble.surveys.viewmodel.detail.DetailViewModel" />
 
         <import type="android.view.View" />
 
