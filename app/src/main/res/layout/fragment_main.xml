@@ -15,7 +15,7 @@
 
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -25,38 +25,29 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swipeRefreshLayout"
+            <com.nimble.surveys.utils.views.VerticalViewPager
+                android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="@{(vm.status == Status.LOADED || vm.status == Status.LOADING) ? View.VISIBLE : View.GONE }"
-                app:onRefreshListener="@{() -> vm.onRefresh()}"
-                app:refreshing="@{ vm.status == Status.LOADING }">
+                app:adapter="@{vm.adapter}"
+                app:indicator="@{indicator}"
+                app:onPageSelected="@{vm}" />
 
-                <!--app:layoutManager="@{vm.layoutManager}"-->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:onScrollLoadMoreListener="@{vm.onScrollLoadMoreListener}" />
-
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-            <com.nimble.surveys.utils.views.ViewIndicator
-                android:id="@+id/viewIndicator"
-                android:layout_width="40dp"
-                android:layout_height="0dp"
-                app:avi_drawable="@drawable/drawable_blue_circle"
-                app:avi_drawable_unselected="@drawable/drawable_gray_circle"
-                app:avi_height="8dp"
-                app:avi_margin="8dp"
-                app:avi_orientation="vertical"
-                app:avi_width="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/swipeRefreshLayout"
-                app:layout_constraintRight_toRightOf="@id/swipeRefreshLayout"
-                app:layout_constraintTop_toTopOf="@+id/swipeRefreshLayout" />
-
+            <com.viewpagerindicator.CirclePageIndicator
+                android:id="@+id/indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="12dip"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:radius="6dip" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <include
+            android:id="@+id/loading"
+            layout="@layout/view_loading"
+            app:visible="@{vm.status == Status.LOADING}" />
 
         <include
             android:id="@+id/empty"
@@ -74,5 +65,5 @@
             app:visible="@{vm.status == Status.FAILED}"
             tools:visibility="gone" />
 
-    </LinearLayout>
+    </FrameLayout>
 </layout>

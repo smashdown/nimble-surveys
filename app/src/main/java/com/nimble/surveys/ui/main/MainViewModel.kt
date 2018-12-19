@@ -9,10 +9,9 @@ import com.nimble.surveys.base.BaseViewModel
 import com.nimble.surveys.model.Survey
 import com.nimble.surveys.model.common.Status
 import com.nimble.surveys.repository.SurveyDao
-import com.nimble.surveys.ui.main.adapter.SurveyListAdapter
+import com.nimble.surveys.ui.main.adapter.SurveyPagerAdapter
 import com.nimble.surveys.utils.arch.SingleLiveEvent
-import com.nimble.surveys.utils.views.LoadMoreListener
-import com.nimble.surveys.utils.views.OnScrollLoadMoreListener
+import com.nimble.surveys.utils.views.OnPageSelected
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -21,14 +20,11 @@ import timber.log.Timber
 class MainViewModel(
     var surveysApi: SurveysApi,
     private val surveyDao: SurveyDao
-) : BaseViewModel(), LoadMoreListener {
+) : BaseViewModel(), OnPageSelected {
 
     val status = SingleLiveEvent(Status.EMPTY)
-    val onScrollLoadMoreListener = OnScrollLoadMoreListener(this, false)
-    val indicatorCountChanged = SingleLiveEvent(0)
 
-    var adapter: SurveyListAdapter? = null
-    var canLoadMore = true
+    var adapter: SurveyPagerAdapter = SurveyPagerAdapter(this)
 
     val navMain = SingleLiveEvent<View>() // survey ID included in tag
 
@@ -40,16 +36,46 @@ class MainViewModel(
                 .subscribe { surveys ->
                     Timber.d("survey count=%s", surveys.size)
 
-                    adapter?.items?.clear()
-                    adapter?.items?.addAll(surveys)
-                    adapter?.notifyDataSetChanged()
-
-                    indicatorCountChanged.value = adapter?.items?.size
+                    adapter.items.clear()
+                    adapter.items.addAll(surveys)
+                    adapter.notifyDataSetChanged()
                 }
         )
     }
 
-    override fun onRefresh() {
+    override fun onPageSelected(position: Int) {
+        Timber.d("onPageSelected() position=%s", position.toString())
+
+        if (adapter.items.size != position + 1) {
+            // Load more only when user reach to final page
+            return
+        }
+
+        if (status.value == Status.LOADING) {
+            Timber.d("Already loading")
+            return
+        }
+
+        status.value = Status.LOADING
+
+        disposables.add(
+            surveysApi.auth()
+                .concatMap { accessToken ->
+                    surveysApi.getSurveyList(
+                        accessToken.access_token,
+                        adapter!!.items.size / BuildConfig.PAGE_UNIT
+                    )
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { result -> onSurveyFetched(result, false) },
+                    { error -> onSurveyFailed(error) }
+                )
+        )
+    }
+
+    fun onRefresh() {
         Timber.d("onRefresh()")
         if (status.value == Status.LOADING) {
             Timber.d("Already loading")
@@ -69,33 +95,6 @@ class MainViewModel(
         )
     }
 
-    override fun onLoadMore() {
-        Timber.d("loadMore()")
-        if (status.value == Status.LOADING) {
-            Timber.d("Already loading")
-            return
-        }
-        status.value = Status.LOADING
-
-        if (canLoadMore) {
-            disposables.add(
-                surveysApi.auth()
-                    .concatMap { accessToken ->
-                        surveysApi.getSurveyList(
-                            accessToken.access_token,
-                            adapter!!.items.size / BuildConfig.PAGE_UNIT
-                        )
-                    }
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                        { result -> onSurveyFetched(result, false) },
-                        { error -> onSurveyFailed(error) }
-                    )
-            )
-        }
-    }
-
     private fun onSurveyFetched(surveyList: List<Survey>, clear: Boolean) {
         disposables.add(
             Observable.fromCallable {
@@ -107,7 +106,6 @@ class MainViewModel(
                 .observeOn(Schedulers.io())
                 .subscribe({
                     Timber.d("Inserted ${surveyList.size} surveys from API in DB...")
-                    canLoadMore = surveyList.isNotEmpty()
                 }, { error ->
                     Timber.e(error)
                 })
@@ -116,7 +114,6 @@ class MainViewModel(
 
     private fun onSurveyFailed(error: Throwable) {
         Timber.e(error, error.localizedMessage)
-        canLoadMore = false
 
         disposables.add(
             Observable.fromCallable {
@@ -145,7 +142,4 @@ class MainViewModel(
         toastLiveEvent.value = R.string.menu_clicked
     }
 
-    override fun canLoadMore(): Boolean {
-        return canLoadMore
-    }
 }

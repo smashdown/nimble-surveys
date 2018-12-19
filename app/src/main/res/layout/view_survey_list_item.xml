@@ -21,16 +21,17 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/ivBackground"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
+            android:layout_height="match_parent"
             android:background="@color/colorPrimary"
+            android:scaleType="centerCrop"
             android:transitionName="coverImage"
             app:imageUrl="@{item.coverImageUrl + 'l'}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,17 +42,18 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:gravity="center"
             android:text="@{item.title}"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             android:textColor="@android:color/white"
             android:textStyle="bold"
             android:theme="@style/outlineText"
-            app:layout_constraintBottom_toTopOf="@id/tvDescription"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintVertical_bias="0.15"
             tools:text="Title" />
 
         <TextView
@@ -59,13 +61,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:gravity="center"
             android:text="@{item.description}"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:textColor="@android:color/white"
             android:theme="@style/outlineText"
-            app:layout_constraintBottom_toTopOf="@+id/btnTakeTheSurvey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle"
@@ -74,20 +76,21 @@
         <Button
             android:id="@+id/btnTakeTheSurvey"
             android:layout_width="0dp"
-            android:layout_height="36dip"
-            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="24dip"
             android:background="@drawable/bg_rounded_button_accent"
             android:onClick="@{() -> vm.onClickSurvey(ivBackground, item)}"
             android:text="@string/take_the_survey"
             android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/ivBackground"
-            app:layout_constraintEnd_toEndOf="@+id/ivBackground"
-            app:layout_constraintStart_toStartOf="@+id/ivBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.85"
             app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".4" />
+            app:layout_constraintWidth_percent=".5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
