@@ -59,11 +59,11 @@ abstract class BaseFragment<DB : ViewDataBinding, out VM : BaseViewModel>(clazz:
         viewModel.finishEvent
             .observe(this, Observer { intent ->
                 if (intent != null) {
-                    activity!!.setResult(Activity.RESULT_OK, intent)
+                    activity?.setResult(Activity.RESULT_OK, intent)
                 } else {
-                    activity!!.setResult(Activity.RESULT_CANCELED, intent)
+                    activity?.setResult(Activity.RESULT_CANCELED, intent)
                 }
-                activity!!.finish()
+                activity?.finish()
             })
     }
 

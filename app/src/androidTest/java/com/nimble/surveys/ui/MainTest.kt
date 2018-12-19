@@ -66,7 +66,7 @@ inline fun <reified T> createWebService(okHttpClient: OkHttpClient, moshi: Moshi
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class MainTest : KoinTest {
-    private var activity: MainActivity? = null
+    private lateinit var activity: MainActivity
     private var resource: IdlingResource? = null
     private val okHttpClient: OkHttpClient by inject()
 
@@ -96,7 +96,7 @@ class MainTest : KoinTest {
             .perform(click())
 
         onView(withText(containsString(getApplicationContext<Context>().resources.getString(R.string.menu_clicked))))
-            .inRoot(withDecorView(not(`is`(activity!!.window.decorView))))
+            .inRoot(withDecorView(not(`is`(activity.window.decorView))))
             .check(matches(isDisplayed()))
     }
 
@@ -122,7 +122,7 @@ class MainTest : KoinTest {
 
         Thread.sleep(1000) // even we're using idling resource, need to wait for layout update.
 
-        val mainFragment = activity!!.supportFragmentManager.findFragmentById(R.id.mainFragment) as MainFragment?
+        val mainFragment = activity.supportFragmentManager.findFragmentById(R.id.mainFragment) as MainFragment?
         Assert.assertThat(mainFragment!!.viewModel.adapter.items.size, `is`(20))
     }
 }

@@ -19,15 +19,17 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(MainViewMo
     override fun observeViewModel() {
         super.observeViewModel()
 
-        viewModel.navMain.observe(this, Observer {
-            val options = ActivityOptionsCompat
-                .makeSceneTransitionAnimation(activity!!, it, it.transitionName)
-                .toBundle()
+        viewModel.navMain.observe(this, Observer { view ->
+            activity?.let {
+                val options = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(it, view, view.transitionName)
+                    .toBundle()
 
-            val intent = Intent(activity, DetailActivity::class.java)
-                .putExtra(ARG_ID, it.getTag(R.id.ivBackground) as String)
+                val intent = Intent(it, DetailActivity::class.java)
+                    .putExtra(ARG_ID, view.getTag(R.id.ivBackground) as String)
 
-            ContextCompat.startActivity(activity!!, intent, options)
+                ContextCompat.startActivity(it, intent, options)
+            }
         })
 
         viewModel.loadSurveys()

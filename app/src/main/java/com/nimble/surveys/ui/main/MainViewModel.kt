@@ -63,7 +63,7 @@ class MainViewModel(
                 .concatMap { accessToken ->
                     surveysApi.getSurveyList(
                         accessToken.access_token,
-                        adapter!!.items.size / BuildConfig.PAGE_UNIT
+                        adapter.items.size / BuildConfig.PAGE_UNIT
                     )
                 }
                 .subscribeOn(Schedulers.io())
