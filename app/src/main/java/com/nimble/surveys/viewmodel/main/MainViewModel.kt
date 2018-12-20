@@ -5,13 +5,14 @@ import android.widget.ImageView
 import com.nimble.surveys.BuildConfig
 import com.nimble.surveys.R
 import com.nimble.surveys.api.SurveysApi
-import com.nimble.surveys.viewmodel.base.BaseViewModel
+import com.nimble.surveys.model.AccessToken
 import com.nimble.surveys.model.Survey
 import com.nimble.surveys.model.common.Status
 import com.nimble.surveys.repository.SurveyDao
-import com.nimble.surveys.viewmodel.main.adapter.SurveyPagerAdapter
 import com.nimble.surveys.utils.arch.SingleLiveEvent
+import com.nimble.surveys.viewmodel.base.BaseViewModel
 import com.nimble.surveys.viewmodel.common.OnPageSelected
+import com.nimble.surveys.viewmodel.main.adapter.SurveyPagerAdapter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -23,12 +24,11 @@ class MainViewModel(
 ) : BaseViewModel(), OnPageSelected {
 
     val status = SingleLiveEvent(Status.EMPTY)
-
     var adapter: SurveyPagerAdapter = SurveyPagerAdapter(this)
-
     val navMain = SingleLiveEvent<View>() // survey ID included in tag
+    var accessToken: AccessToken? = null
 
-    fun loadSurveys() {
+    fun subscribeDb() {
         launch {
             surveyDao.findAll()
                 .subscribeOn(Schedulers.io())
@@ -43,55 +43,41 @@ class MainViewModel(
         }
     }
 
-    override fun onPageSelected(position: Int) {
-        Timber.d("onPageSelected() position=%s", position.toString())
-
-        if (adapter.items.size != position + 1) {
-            // Load more only when user reach to final page
-            return
-        }
-
-        if (status.value == Status.LOADING) {
-            Timber.d("Already loading")
-            return
-        }
-
-        status.value = Status.LOADING
-
-        launch {
-            surveysApi.auth()
-                .concatMap { accessToken ->
-                    surveysApi.getSurveyList(
-                        accessToken.accessToken,
-                        adapter.items.size / BuildConfig.PAGE_UNIT
-                    )
-                }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { result -> onSurveyFetched(result, false) },
-                    { error -> onSurveyFailed(error) }
-                )
-        }
-    }
-
-    fun onRefresh() {
+    fun onRefresh(page: Int) {
         Timber.d("onRefresh()")
         if (status.value == Status.LOADING) {
             Timber.d("Already loading")
             return
         }
+
         status.value = Status.LOADING
 
-        launch {
-            surveysApi.auth()
-                .concatMap { accessToken -> surveysApi.getSurveyList(accessToken.accessToken, 0) }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { result -> onSurveyFetched(result, true) },
-                    { error -> onSurveyFailed(error) }
-                )
+        if (accessToken == null) {
+            launch {
+                surveysApi.auth()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ result ->
+                        accessToken = result
+                        loadSurveys(page)
+                    }, { error -> onSurveyFailed(error) })
+            }
+        } else {
+            loadSurveys(page)
+        }
+    }
+
+    private fun loadSurveys(page: Int) {
+        accessToken?.let {
+            launch {
+                surveysApi.getSurveyList(it.accessToken, page)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        { result -> onSurveyFetched(result, page == 0) }, // clear data only for first loading.
+                        { error -> onSurveyFailed(error) }
+                    )
+            }
         }
     }
 
@@ -129,6 +115,24 @@ class MainViewModel(
                 )
         }
 
+    }
+
+    override fun onPageSelected(position: Int) {
+        Timber.d("onPageSelected() position=%s", position.toString())
+
+        if (adapter.items.size != position + 1) {
+            // Load more only when user reach to final page
+            return
+        }
+
+        if (status.value == Status.LOADING) {
+            Timber.d("Already loading")
+            return
+        }
+
+        status.value = Status.LOADING
+
+        loadSurveys(adapter.items.size / BuildConfig.PAGE_UNIT)
     }
 
     fun onClickSurvey(view: ImageView, item: Survey) {
