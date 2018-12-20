@@ -34,7 +34,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, DummyViewModel>(DummyView
 
         return when {
             item.itemId == android.R.id.home -> {
-                mainFragment?.viewModel?.onRefresh()
+                mainFragment?.viewModel?.onRefresh(0)
                 true
             }
             item.itemId == R.id.action_menu -> {

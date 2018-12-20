@@ -32,7 +32,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(MainViewMo
             }
         })
 
-        viewModel.loadSurveys()
-        viewModel.onRefresh()
+        viewModel.subscribeDb()
+        viewModel.onRefresh(0)
     }
 }
