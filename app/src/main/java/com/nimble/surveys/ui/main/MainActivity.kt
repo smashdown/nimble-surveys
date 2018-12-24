@@ -1,12 +1,12 @@
-package com.nimble.surveys.viewmodel.main
+package com.nimble.surveys.ui.main
 
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
 import com.nimble.surveys.R
-import com.nimble.surveys.viewmodel.base.BaseActivity
-import com.nimble.surveys.viewmodel.base.DummyViewModel
+import com.nimble.surveys.ui.base.BaseActivity
+import com.nimble.surveys.ui.base.DummyViewModel
 import com.nimble.surveys.databinding.ActivityMainBinding
 
 

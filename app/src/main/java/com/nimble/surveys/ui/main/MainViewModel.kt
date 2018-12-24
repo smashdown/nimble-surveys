@@ -1,4 +1,4 @@
-package com.nimble.surveys.viewmodel.main
+package com.nimble.surveys.ui.main
 
 import android.view.View
 import android.widget.ImageView
@@ -10,9 +10,9 @@ import com.nimble.surveys.model.Survey
 import com.nimble.surveys.model.common.Status
 import com.nimble.surveys.repository.SurveyDao
 import com.nimble.surveys.utils.arch.SingleLiveEvent
-import com.nimble.surveys.viewmodel.base.BaseViewModel
-import com.nimble.surveys.viewmodel.common.OnPageSelected
-import com.nimble.surveys.viewmodel.main.adapter.SurveyPagerAdapter
+import com.nimble.surveys.ui.base.BaseViewModel
+import com.nimble.surveys.ui.common.OnPageSelected
+import com.nimble.surveys.ui.main.adapter.SurveyPagerAdapter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

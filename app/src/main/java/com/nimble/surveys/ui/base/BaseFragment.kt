@@ -1,4 +1,4 @@
-package com.nimble.surveys.viewmodel.base
+package com.nimble.surveys.ui.base
 
 import android.app.Activity
 import android.os.Bundle

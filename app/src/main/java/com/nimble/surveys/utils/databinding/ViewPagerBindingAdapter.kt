@@ -2,9 +2,9 @@ package com.nimble.surveys.utils.databinding
 
 import androidx.databinding.BindingAdapter
 import androidx.viewpager.widget.ViewPager
-import com.nimble.surveys.viewmodel.main.adapter.SurveyPagerAdapter
-import com.nimble.surveys.viewmodel.common.OnPageSelected
-import com.nimble.surveys.viewmodel.common.VerticalViewPager
+import com.nimble.surveys.ui.main.adapter.SurveyPagerAdapter
+import com.nimble.surveys.ui.common.OnPageSelected
+import com.nimble.surveys.ui.common.VerticalViewPager
 import com.viewpagerindicator.CirclePageIndicator
 import timber.log.Timber
 

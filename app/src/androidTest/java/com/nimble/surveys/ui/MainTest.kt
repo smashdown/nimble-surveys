@@ -1,4 +1,4 @@
-package com.nimble.surveys.viewmodel
+package com.nimble.surveys.ui
 
 import android.content.Context
 import androidx.test.core.app.ActivityScenario
@@ -18,8 +18,8 @@ import com.jakewharton.espresso.OkHttp3IdlingResource
 import com.nimble.surveys.R
 import com.nimble.surveys.api.SurveysApi
 import com.nimble.surveys.di.NetworkProperties
-import com.nimble.surveys.viewmodel.main.MainActivity
-import com.nimble.surveys.viewmodel.main.MainFragment
+import com.nimble.surveys.ui.main.MainActivity
+import com.nimble.surveys.ui.main.MainFragment
 import com.squareup.moshi.Moshi
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient

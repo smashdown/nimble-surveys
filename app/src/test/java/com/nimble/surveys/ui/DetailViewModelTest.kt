@@ -1,4 +1,4 @@
-package com.nimble.surveys.viewmodel
+package com.nimble.surveys.ui
 
 
 import android.content.Intent
@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import com.nimble.surveys.utils.RxImmediateSchedulerRule
 import com.nimble.surveys.model.Survey
 import com.nimble.surveys.repository.SurveyDao
-import com.nimble.surveys.viewmodel.detail.DetailViewModel
+import com.nimble.surveys.ui.detail.DetailViewModel
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Rule

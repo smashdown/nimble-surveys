@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.nimble.surveys.viewmodel.main.MainViewModel" />
+            type="com.nimble.surveys.ui.main.MainViewModel" />
 
         <import type="android.view.View" />
 
@@ -25,7 +25,7 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <com.nimble.surveys.viewmodel.common.VerticalViewPager
+            <com.nimble.surveys.ui.common.VerticalViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

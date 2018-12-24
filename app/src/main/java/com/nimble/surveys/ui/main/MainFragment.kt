@@ -1,13 +1,13 @@
-package com.nimble.surveys.viewmodel.main
+package com.nimble.surveys.ui.main
 
 import android.content.Intent
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.nimble.surveys.R
-import com.nimble.surveys.viewmodel.base.BaseFragment
+import com.nimble.surveys.ui.base.BaseFragment
 import com.nimble.surveys.databinding.FragmentMainBinding
-import com.nimble.surveys.viewmodel.detail.DetailActivity
+import com.nimble.surveys.ui.detail.DetailActivity
 
 class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>(MainViewModel::class) {
     companion object {

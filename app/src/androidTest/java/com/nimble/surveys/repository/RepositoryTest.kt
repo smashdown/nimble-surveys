@@ -4,7 +4,7 @@ import androidx.room.Room
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.nimble.surveys.model.Survey
-import com.nimble.surveys.viewmodel.main.MainActivity
+import com.nimble.surveys.ui.main.MainActivity
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.After
 import org.junit.Assert

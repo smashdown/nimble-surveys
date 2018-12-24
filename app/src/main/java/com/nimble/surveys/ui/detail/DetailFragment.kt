@@ -1,7 +1,7 @@
-package com.nimble.surveys.viewmodel.detail
+package com.nimble.surveys.ui.detail
 
 import com.nimble.surveys.R
-import com.nimble.surveys.viewmodel.base.BaseFragment
+import com.nimble.surveys.ui.base.BaseFragment
 import com.nimble.surveys.databinding.FragmentDetailBinding
 
 class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>(DetailViewModel::class) {
